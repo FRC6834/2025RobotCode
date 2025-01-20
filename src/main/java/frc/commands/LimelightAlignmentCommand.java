@@ -14,13 +14,14 @@ public class LimelightAlignmentCommand extends Command{
     //called every time the command is scheduled
     @Override
     public void execute(){
-        final DriveSubsystem drive = new DriveSubsystem();
-        double x = getX();
-        final int turnDirection = getTurnDirection(x);
+        final DriveSubsystem drive = new DriveSubsystem(); //gets drivesubsystem to run drivecommand
+        double x = getX(); //gets distance from the center of the limelight's view
+        final int turnDirection = getTurnDirection(x); //sees if bot should go left or right
         
-        while(x>1&&x<-1){
+        //the reason u wanna run inbetween +-1 instead of only stopping at 0 is for margin of error
+        while(x>1&&x<-1){ //only runs if X is between -1 and 1
             x = getX();
-            new DriveCommand(drive, 0,0,0,turnDirection);
+            new DriveCommand(drive, 0,0,0,turnDirection); //rotates
         }
     }
 
