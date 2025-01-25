@@ -103,6 +103,6 @@ public final class Constants {
   //PLACEHOLDER VALUES CHANGE THESE WHEN THE LL IS MOUNTED
   public static final class LimelightConstants{
     public static final int MOUNT_ANGLE = -1; 
-    public static final int MOUNT_HEIGHT = -1; //vertical distance from the top of the bumpers to the limelight
+    public static final int MOUNT_HEIGHT = -1; //vertical distance from the top of the bumpers to the limelight IN METERS
   }
 }

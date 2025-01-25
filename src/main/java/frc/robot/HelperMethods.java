@@ -1,11 +1,13 @@
 package frc.robot;
 //contains miscellanious global methods
 
+import edu.wpi.first.networktables.*;
 
- public class HelperMethods {
+public class HelperMethods {
 
     private static final int LIMELIGHT_MOUNT_ANGLE = Constants.LimelightConstants.MOUNT_ANGLE;
     private static final int LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
+    private final AprilTagHeightDB DB = new AprilTagHeightDB();
 
 
     //uses law of sines to trianglulate distance
@@ -24,5 +26,11 @@ package frc.robot;
         double realHorizontalOffset = Math.atan(cameraLensHorizontalOffset / getDistance());
         double rotationError = Math.atan(realHorizontalOffset / getDistance());
         return rotationError;
+    }
+
+    public double getAprilTagHeight(){
+        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        final double ID = table.getEntry("tid").getDouble(0);
+        return DB.getHeight(ID); //bro stfu about accessing it statically THIS IS A NONSTATIC METHOD
     }
 }
