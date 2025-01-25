@@ -10,8 +10,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//imports for navX
-
 public class IntakeSubsystem extends SubsystemBase {
    private final SparkMax kIntakeSystem = new SparkMax(IntakeConstants.kIntakeSystem, MotorType.kBrushless);
 
@@ -24,6 +22,6 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   
-    }
-  /** Creates a new DriveSubsystem. */
+  
+}
   
