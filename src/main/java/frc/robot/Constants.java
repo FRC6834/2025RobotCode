@@ -59,6 +59,15 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
   }
 
+  public static final class IntakeConstants {
+    public static final int kIntakeSystem = 9;
+    
+  }
+
+  public static final class ElevatorConstants {
+    public static final int kElevatorSubsystem = 10;
+  }
+
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
