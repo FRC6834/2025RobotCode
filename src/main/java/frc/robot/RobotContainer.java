@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.commands.LimelightAlignmentCommand;
+import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -27,6 +27,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+  private final LimelightSubsystem m_limelight = new LimelightSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -63,10 +64,6 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kA.value)
-            .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
-            .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
-
     /*
      * A Button - Button.kA.value
      * B Button - Button.kB.value
@@ -76,14 +73,23 @@ public class RobotContainer {
      * Left Bumper - Button.kLeftBumper.value
      */
     
-    new JoystickButton(m_driverController, Button.kX.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    //resets wheels
+    new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
+
+    //A Button: Elevator
     new JoystickButton(m_driverController, Button.kA.value)
-        .whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem))
-        .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+    .whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem))
+    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
   
+    //B Button: Intake
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
+      .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
+
+
+    //X Button: Test Limelight Distance estimation
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whileTrue(new RunCommand(() -> m_limelight.alignDistance(), m_limelight));
 }
 
   /**
@@ -91,7 +97,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    return new LimelightAlignmentCommand();
+  public Command getAutonomousCommand(){
+    return null; //pathplanner goes here
   }
 }
