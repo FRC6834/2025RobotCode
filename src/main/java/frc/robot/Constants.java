@@ -99,4 +99,10 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  //PLACEHOLDER VALUES CHANGE THESE WHEN THE LL IS MOUNTED
+  public static final class LimelightConstants{
+    public static final int MOUNT_ANGLE = -1; 
+    public static final int MOUNT_HEIGHT = -1; //vertical distance from the top of the bumpers to the limelight
+  }
 }
