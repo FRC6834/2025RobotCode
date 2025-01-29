@@ -27,6 +27,6 @@ public class ElevatorCommand extends Command{
  
   //command end condition. returning true ends the command so u can choose when it stops if u want
   @Override
-  public boolean isFinished(){return false;}
+  public boolean isFinished(){return false;} //returns false as a placeholder
  }
  
