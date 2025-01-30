@@ -109,9 +109,8 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
   }
 
-  //PLACEHOLDER VALUES CHANGE THESE WHEN THE LL IS MOUNTED
   public static final class LimelightConstants{
-    public static final int MOUNT_ANGLE = -1; 
-    public static final int MOUNT_HEIGHT = -1; //vertical distance from the top of the bumpers to the limelight IN METERS
+    public static final double MOUNT_ANGLE = 90; 
+    public static final double MOUNT_HEIGHT = 0.0889; //vertical distance from ground to the limelight IN METERS the LL is currently mounted at 3.5 inches or 0.0889 meters
   }
 }
