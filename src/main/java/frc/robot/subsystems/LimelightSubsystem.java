@@ -8,7 +8,7 @@ public class LimelightSubsystem extends SubsystemBase{
     //final private DriveSubsystem drive = new DriveSubsystem();
 
 
-    public void alignDistance(){
+    public static void alignDistance(){
         System.out.println(HELPER.getDistance());
         //final double distance = HELPER.getDistance();
         //new DriveCommand(drive, distance, 0, 0, 0); //test
