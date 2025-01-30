@@ -97,7 +97,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    Apriltagdriver.main();
+    Apriltagdriver.Lightupsketchers();
+    Apriltagdriver.levatate();
   }
 
   @Override
