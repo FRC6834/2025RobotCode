@@ -42,7 +42,7 @@ public class RobotContainer {
     //!!! MOVING WITH THE STICKS HAS BEEN TEMPORARILY DISABLED FOR TESTING because these controllers have stickdrift and its annoying. re-enable if necessary !!!
 
     // Configure default commands
-    /*m_robotDrive.setDefaultCommand(
+    m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
@@ -51,7 +51,7 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true),
-            m_robotDrive));*/ 
+            m_robotDrive));
             
   }
 

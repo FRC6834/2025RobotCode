@@ -9,7 +9,7 @@ public class LimelightSubsystem extends SubsystemBase{
 
 
     public static void alignDistance(){
-        System.out.println(HELPER.getDistance());
+        System.out.println("DISTANCE TO APRILTAG IN INCHES: "+HELPER.getDistance());
         //final double distance = HELPER.getDistance();
         //new DriveCommand(drive, distance, 0, 0, 0); //test
     }

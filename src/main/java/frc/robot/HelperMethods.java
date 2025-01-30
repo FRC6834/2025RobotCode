@@ -16,13 +16,15 @@ public class HelperMethods {
 
         final double tagHeight = getAprilTagHeight();
         
-        final double targetDistanceOffset = tagHeight-LIMELIGHT_HEIGHT;
+        final double targetHeightOffset = tagHeight-LIMELIGHT_HEIGHT;
         
         final double totalAngleDegrees = LIMELIGHT_MOUNT_ANGLE+targetAngleOffset;
         final double totalAngleRadians = totalAngleDegrees*(3.14159/180.0);
 
         System.out.println("apriltag ID "+table.getEntry("tid"));
-        return targetDistanceOffset/Math.tan(totalAngleRadians);
+        System.out.println("test");
+        System.out.println("id "+targetAngleOffset);
+        return targetHeightOffset/Math.tan(totalAngleRadians);
     }
 
     //returns the angle needed to turn to face the apriltag, in radians
@@ -32,6 +34,7 @@ public class HelperMethods {
         final double cameraLensHorizontalOffset = LimelightHelpers.getTX("limelight")/getDistance();
         final double realHorizontalOffset = Math.atan(cameraLensHorizontalOffset/getDistance());
         final double rotationError = Math.atan(realHorizontalOffset / getDistance());
+        System.out.println("test");
         return rotationError;
     }
 
