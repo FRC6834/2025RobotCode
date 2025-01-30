@@ -6,7 +6,7 @@ import edu.wpi.first.networktables.*;
 public class HelperMethods {
 
     private static final double LIMELIGHT_MOUNT_ANGLE = Constants.LimelightConstants.MOUNT_ANGLE;
-    private static final float LIMELIGHT_HEIGHT = (float)Constants.LimelightConstants.MOUNT_HEIGHT;
+    private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
 
 
     //uses trig to trianglulate distance
