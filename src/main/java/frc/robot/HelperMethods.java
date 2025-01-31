@@ -21,9 +21,7 @@ public class HelperMethods {
         final double totalAngleDegrees = LIMELIGHT_MOUNT_ANGLE+targetAngleOffset;
         final double totalAngleRadians = totalAngleDegrees*(3.14159/180.0);
 
-        System.out.println("apriltag ID "+table.getEntry("tid"));
-        System.out.println("test");
-        System.out.println("id "+targetAngleOffset);
+        System.out.println("apriltag ID: "+table.getEntry("tid").getDouble(-1.0));
         return targetHeightOffset/Math.tan(totalAngleRadians);
     }
 
