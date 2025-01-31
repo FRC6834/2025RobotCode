@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -33,48 +36,61 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-
-     int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
-     boolean dUp = false;
-     boolean dDown = false;
-     boolean dRight = false;
-     boolean dLeft = false;
-
-     if (dPad == 0){
-      dUp = true;
-     }
-     if (dPad == 90) {
-      dRight = true;
-     }
-     if (dPad == 180) {
-      dDown = true;
-     }
-     if (dPad == 270) {
-      dLeft = true;
-     }    
-
-
-    //!!! MOVING WITH THE STICKS HAS BEEN TEMPORARILY DISABLED FOR TESTING because these controllers have stickdrift and its annoying. re-enable if necessary !!!
-    //You can adjust the kDriveDeadband to fix this. It's set at 0.05 right now - try 0.1 and see if the issue still persists. -George
-
-    // Configure default commands
-    m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
-            m_robotDrive));
-            
-  }
-
-   
-  /**
+    NamedCommands.registerCommand("AlignWheelsCommand", AlignWheelsCommand());
+            // Configure the button bindings
+            configureButtonBindings();
+        
+             int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
+             boolean dUp = false;
+             boolean dDown = false;
+             boolean dRight = false;
+             boolean dLeft = false;
+        
+             if (dPad == 0){
+              dUp = true;
+             }
+             if (dPad == 90) {
+              dRight = true;
+             }
+             if (dPad == 180) {
+              dDown = true;
+             }
+             if (dPad == 270) {
+              dLeft = true;
+             }    
+        
+        
+            //!!! MOVING WITH THE STICKS HAS BEEN TEMPORARILY DISABLED FOR TESTING because these controllers have stickdrift and its annoying. re-enable if necessary !!!
+            //You can adjust the kDriveDeadband to fix this. It's set at 0.05 right now - try 0.1 and see if the issue still persists. -George
+        
+            // Configure default commands
+            m_robotDrive.setDefaultCommand(
+                // The left stick controls translation of the robot.
+                // Turning is controlled by the X axis of the right stick.
+                new RunCommand(
+                    () -> m_robotDrive.drive(
+                        -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                        -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                        -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                        true),
+                    m_robotDrive));
+                    
+          }
+        
+           
+          private Command AlignWheelsCommand() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'AlignWheelsCommand'");
+      }
+    
+    
+          private Command autoBalanceCommand() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'autoBalanceCommand'");
+      }
+    
+    
+      /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
