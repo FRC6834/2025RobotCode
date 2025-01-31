@@ -56,9 +56,6 @@ public class RobotContainer {
      }    
 
 
-    //!!! MOVING WITH THE STICKS HAS BEEN TEMPORARILY DISABLED FOR TESTING because these controllers have stickdrift and its annoying. re-enable if necessary !!!
-    //You can adjust the kDriveDeadband to fix this. It's set at 0.05 right now - try 0.1 and see if the issue still persists. -George
-
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
