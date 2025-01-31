@@ -36,6 +36,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+<<<<<<< HEAD
     NamedCommands.registerCommand("AlignWheelsCommand", AlignWheelsCommand());
             // Configure the button bindings
             configureButtonBindings();
@@ -91,6 +92,47 @@ public class RobotContainer {
     
     
       /**
+=======
+    // Configure the button bindings
+    configureButtonBindings();
+
+     int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
+     boolean dUp = false;
+     boolean dDown = false;
+     boolean dRight = false;
+     boolean dLeft = false;
+
+     if (dPad == 0){
+      dUp = true;
+     }
+     if (dPad == 90) {
+      dRight = true;
+     }
+     if (dPad == 180) {
+      dDown = true;
+     }
+     if (dPad == 270) {
+      dLeft = true;
+     }    
+
+
+    // Configure default commands
+    m_robotDrive.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> m_robotDrive.drive(
+                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                true),
+            m_robotDrive));
+            
+  }
+
+   
+  /**
+>>>>>>> 1ac77e46b12ff0d8b7787fedbdb6b338433939a2
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
