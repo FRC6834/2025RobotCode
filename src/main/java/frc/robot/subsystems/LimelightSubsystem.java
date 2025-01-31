@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.commands.DriveCommand;
 import frc.robot.HelperMethods;
 
 public class LimelightSubsystem extends SubsystemBase{
@@ -9,12 +9,12 @@ public class LimelightSubsystem extends SubsystemBase{
     final private static DriveSubsystem drive = new DriveSubsystem();
     
     
-        public static void alignDistance(){
-            System.out.println("DISTANCE TO APRILTAG IN INCHES: "+HELPER.getDistance());
-            new DriveCommand(drive, 0, 0, 0, 5); //test
-            System.out.println("WHAT if it was all a dream..");
-        //final double distance = HELPER.getDistance();
-        //new DriveCommand(drive, distance, 0, 0, 0); //test
+    public static void alignDistance(){
+        final double distance = HELPER.getDistance();
+        System.out.println("DISTANCE TO APRILTAG IN INCHES: "+distance);
+        SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
+        
+        //new DriveCommand(drive, 0, 0, 0, 5); //test
     }
 
     public void alignAngle(){
