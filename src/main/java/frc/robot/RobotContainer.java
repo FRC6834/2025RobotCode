@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -39,7 +36,28 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+     int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
+     boolean dUp = false;
+     boolean dDown = false;
+     boolean dRight = false;
+     boolean dLeft = false;
+
+     if (dPad == 0){
+      dUp = true;
+     }
+     if (dPad == 90) {
+      dRight = true;
+     }
+     if (dPad == 180) {
+      dDown = true;
+     }
+     if (dPad == 270) {
+      dLeft = true;
+     }    
+
+
     //!!! MOVING WITH THE STICKS HAS BEEN TEMPORARILY DISABLED FOR TESTING because these controllers have stickdrift and its annoying. re-enable if necessary !!!
+    //You can adjust the kDriveDeadband to fix this. It's set at 0.05 right now - try 0.1 and see if the issue still persists. -George
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -66,28 +84,37 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*
+    /*This is how you reference the main buttons on the controllers - George
      * A Button - Button.kA.value
      * B Button - Button.kB.value
      * X Button - Button.kX.value
      * Y Button - Button.kY.value
      * Right Bumper - Button.kRightBumper.value
      * Left Bumper - Button.kLeftBumper.value
+     * Start Button - Button.KStart.value
      */
+
+
+    //We should consider using the D-pad for different scoring heights - it's not ideal, but it will allow us to get all of the subsystems working on one controller
+    //For example, left (L1), down (L2), right (L3), up (L4)
     
     //resets wheels
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    //A Button: Elevator
+    //A Button: Elevator Up
     new JoystickButton(m_driverController, Button.kA.value)
     .whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem))
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+
+    //How are we making the elevator go down? - George
   
     //B Button: Intake
+    //Which intake is this? - George
     new JoystickButton(m_driverController, Button.kB.value)
       .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
 
+    //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
     //X Button: Test Limelight Distance estimation
     new JoystickButton(m_driverController, Button.kX.value)

@@ -68,6 +68,23 @@ public final class Constants {
     public static final int kElevatorSubsystem = 10;
   }
 
+  public static final class AlgaeConstants {
+    public static final int kAlgaeIntake = 11;
+    public static final int kAlgaePivot = 12;
+
+    public static final class ArmSetpoints {
+      public static final double kStow = 18.5;
+      public static final double kHold = 11.5;
+      public static final double kDown = 0;
+    }
+
+    public static final class IntakeSetpoints {
+      public static final double kForward = 0.5;
+      public static final double kReverse = -0.5;
+      public static final double kHold = 0.25;
+    }
+  }
+
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
