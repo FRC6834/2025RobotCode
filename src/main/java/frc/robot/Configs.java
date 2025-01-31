@@ -56,17 +56,17 @@ public final class Configs {
 
     public static final class AlgaeSubsystem {
     public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
-    public static final SparkMaxConfig armConfig = new SparkMaxConfig();
+    public static final SparkMaxConfig pivotConfig = new SparkMaxConfig();
 
     static {
       // Configure basic setting of the arm motor
-      armConfig.smartCurrentLimit(40);
+      pivotConfig.smartCurrentLimit(40);
 
       /*
        * Configure the closed loop controller. We want to make sure we set the
        * feedback sensor as the primary encoder.
        */
-      armConfig
+      pivotConfig
           .closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
           // Set PID values for position control. We don't need to pass a closed
