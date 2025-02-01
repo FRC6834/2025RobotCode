@@ -20,7 +20,9 @@ import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -130,7 +132,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
     // 2/1/2025 - THIS IS JUST A PLACEHOLDER WHILE WORKING ON ELEVATOR CODE. assuming everything works, the elevator should go to level1 once the A button is clicked
+    // 2/1/2025 - THIS IS JUST A PLACEHOLDER WHILE WORKING ON ELEVATOR CODE. assuming everything works, the elevator should go to level1 once the A button is clicked
     new JoystickButton(m_driverController, Button.kA.value)
+    .whileTrue(new SequentialCommandGroup(new RunCommand(() -> m_ElevatorSubsystem.setConstants(Constants.CoralLevels.level1, true), m_ElevatorSubsystem)), new ElevatorCommand())
     .whileTrue(new SequentialCommandGroup(new RunCommand(() -> m_ElevatorSubsystem.setConstants(Constants.CoralLevels.level1, true), m_ElevatorSubsystem)), new ElevatorCommand())
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
 
