@@ -28,6 +28,7 @@ public class ElevatorCommand extends Command{
  
   @Override
   public void end(boolean interrupted){subsystem.stopElevator();}
+  public void end(boolean interrupted){subsystem.stopElevator();}
   
  
   //command end condition. returning true ends the command so u can choose when it stops if u want

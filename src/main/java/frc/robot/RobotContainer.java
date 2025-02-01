@@ -7,12 +7,21 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import frc.commands.AlignWheelsCommand;
+import frc.commands.ElevatorCommand;
+import frc.commands.IntakeInCommand;
+import frc.commands.IntakeShootCommand;
 import frc.commands.AlignWheelsCommand;
 import frc.commands.ElevatorCommand;
 import frc.commands.IntakeInCommand;
@@ -32,12 +41,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   
+  
   public static boolean dUp;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final LimelightSubsystem m_limelight = new LimelightSubsystem();
+  private final SendableChooser<Command> autoChooser;
   private final SendableChooser<Command> autoChooser;
   
   // The driver's controller
@@ -46,6 +57,7 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  
   
   public RobotContainer() {
         // ...
@@ -64,8 +76,44 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
 
 
+        // ...
+
+    // Build an auto chooser. This will use Commands.none() as the default option.
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    //named and registered commands for path planner
+    NamedCommands.registerCommand("stop", new AlignWheelsCommand());
+    NamedCommands.registerCommand("intakein", new IntakeInCommand());
+    NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
+
+
     // Configure the button bindings
     configureButtonBindings();
+
+     int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
+     boolean dUp = false;
+     boolean dDown = false;
+     boolean dRight = false;
+     boolean dLeft = false;
+
+     if (dPad == 0){
+      dUp = true;
+     }
+     if (dPad == 90) {
+      dRight = true;
+     }
+     if (dPad == 180) {
+      dDown = true;
+     }
+     if (dPad == 270) {
+      dLeft = true;
+     }    
+
 
      int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
      boolean dUp = false;
@@ -113,6 +161,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /*This is how you reference the main buttons on the controllers - George
+    /*This is how you reference the main buttons on the controllers - George
      * A Button - Button.kA.value
      * B Button - Button.kB.value
      * X Button - Button.kX.value
@@ -120,7 +169,12 @@ public class RobotContainer {
      * Right Bumper - Button.kRightBumper.value
      * Left Bumper - Button.kLeftBumper.value
      * Start Button - Button.KStart.value
+     * Start Button - Button.KStart.value
      */
+
+
+    //We should consider using the D-pad for different scoring heights - it's not ideal, but it will allow us to get all of the subsystems working on one controller
+    //For example, left (L1), down (L2), right (L3), up (L4)
 
 
     //We should consider using the D-pad for different scoring heights - it's not ideal, but it will allow us to get all of the subsystems working on one controller
@@ -135,13 +189,17 @@ public class RobotContainer {
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
 
     //How are we making the elevator go down? - George
+
+    //How are we making the elevator go down? - George
   
     //B Button: Intake
+    //Which intake is this? - George
     //Which intake is this? - George
     new JoystickButton(m_driverController, Button.kB.value)
       .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
 
+    //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
     //X Button: Test Limelight Distance estimation
@@ -154,6 +212,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public Command getAutonomousCommand() {
+    return autoChooser.getSelected();
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
