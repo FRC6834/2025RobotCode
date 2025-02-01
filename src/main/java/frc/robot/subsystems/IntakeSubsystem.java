@@ -21,7 +21,9 @@ public class IntakeSubsystem extends SubsystemBase {
     kIntakeSystem.set(0);
   }
 
-  
+     public void shootIntake(){
+    kIntakeSystem.set(-1);
+  }
   
 }
   
