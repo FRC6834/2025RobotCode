@@ -4,7 +4,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.ElevatorConstants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Apriltagdriver{
