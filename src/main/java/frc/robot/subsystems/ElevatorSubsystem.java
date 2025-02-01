@@ -7,27 +7,27 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //imports for navX
 
-public class ElevatorSubsystem extends SubsystemBase {
+public class ElevatorSubsystem extends SubsystemBase{
    private final SparkMax kElevatorSubsystem = new SparkMax(ElevatorConstants.kElevatorSubsystem, MotorType.kBrushless);
+  private double level = -1;
+  private double currentHeight = -1; //update this using encoders
 
-   public void elevatorUp(){
-     kElevatorSubsystem.set(-.75);
-   }
+  //called whenever a subsystem is called. sets the target level to the parameter specified
+   public ElevatorSubsystem(double level){this.level = level;}
 
-   public void elevatorDown() {
-    kElevatorSubsystem.set(.75);
-   }
+   public void elevatorUp(){kElevatorSubsystem.set(-.75);}
 
-   public void stopElevator(){
-    kElevatorSubsystem.set(0);
-  }
+   public void elevatorDown() {kElevatorSubsystem.set(.75);}
+
+   public void stopElevator(){kElevatorSubsystem.set(0);}
 
   
-    }
-  /** Creates a new DriveSubsystem. */
+}
   
