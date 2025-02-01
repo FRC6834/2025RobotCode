@@ -12,9 +12,6 @@ public class AlignWheelsCommand extends Command{
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
     @Override
-    public void execute(){
-            new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
-
-    }
+    public void execute(){new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));}
     
 }

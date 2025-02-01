@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
 import frc.commands.AlignWheelsCommand;
-import frc.commands.ElevatorCommand;
 import frc.commands.IntakeInCommand;
 import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
@@ -150,7 +149,7 @@ public class RobotContainer {
 
     //X Button: Test Limelight Distance estimation
     new JoystickButton(m_driverController, Button.kX.value)
-      .whileTrue(new RunCommand(() -> m_limelight.alignDistance(), m_limelight));
+      .whileTrue(new RunCommand(() -> m_limelight.align(), m_limelight));
 }
 
   /**

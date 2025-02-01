@@ -8,6 +8,7 @@ public class DriveCommand extends Command{
     private final double x_speed;
     private final double y_speed;
     private final double rot;
+
     private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
     public DriveCommand(DriveSubsystem subsystem, double meters, double xspeed, double yspeed, double rotation){
         distanceMeters = meters;
@@ -15,6 +16,7 @@ public class DriveCommand extends Command{
         y_speed = yspeed;
         rot = rotation;
     }
+    
      //called when the command is initialized
      @Override
      public void initialize(){
@@ -34,6 +36,7 @@ public class DriveCommand extends Command{
  
      @Override
      public boolean isFinished(){
+
          return m_DriveSubsystem.getPose().getX() >= distanceMeters;
      }
  }
