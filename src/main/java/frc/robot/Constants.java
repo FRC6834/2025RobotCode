@@ -128,14 +128,16 @@ public final class Constants {
 
   public static final class LimelightConstants{
     public static final double MOUNT_ANGLE = 0; 
-    public static final double MOUNT_HEIGHT = 3.5; //vertical distance from ground to the limelight IN INCHES
+    public static final double MOUNT_HEIGHT = 3.5; //vertical distance from ground to the limelight IN INCHES the LL is currently mounted at 3.5 inches or 0.0889 meters
   }
 
-  //ALL IN INCHES
-  public static final class ReefLevelConstants {
-    public static final double LEVEL_ONE = 18;
-    public static final double LEVEL_TWO = 31.875; // angled 35°, inset 1.625 in
-    public static final double LEVEL_THREE = 47.625; // angled 35°, inset 1.625 in
-    public static final double LEVEL_FOUR = 60; //vertical, inset 1.125 in
+  public static class CoralLevels { // below is the height in inches for each of the coral levels
+    public static final double level1 = 18;
+    public static final double level2 = 31.875;
+    public static final double level3 = 47.0625;
+    public static final double level4 = 72;
   }
+
 }
+
+

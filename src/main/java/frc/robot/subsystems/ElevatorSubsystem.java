@@ -9,21 +9,16 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants.CoralLevels;
 import frc.robot.Constants.ElevatorConstants;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.spark.SparkClosedLoopController;
 
-//imports for navX
-
-public class ElevatorSubsystem extends SubsystemBase {
-   private final SparkMax kElevatorSubsystem = new SparkMax(ElevatorConstants.kElevatorSubsystem, MotorType.kBrushless);
-   
-   PIDController elevatorPID = new PIDController(1.0, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
+public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: ~90 inches tall, two motors (one for each side)
+  
+  private final SparkMax kElevatorSubsystem = new SparkMax(ElevatorConstants.kElevatorSubsystem, MotorType.kBrushless);
+  
+  // initializing pid controller and encoder for elevator
+  PIDController elevatorPID = new PIDController(1.0, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
    private RelativeEncoder elevatorEncoder = kElevatorSubsystem.getEncoder();
-
-   
 
 // moving the elevator accordingly based on encoder + pid information
 void moveToSetpoint(double coralLevel){ // setting the speed to move to the setpoint
