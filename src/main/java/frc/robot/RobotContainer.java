@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
-import frc.commands.AlignWheelsCommand;
 import frc.commands.IntakeInCommand;
 import frc.commands.IntakeShootCommand;
 import frc.commands.ElevatorCommand;
@@ -58,7 +57,6 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     //named and registered commands for path planner
-    NamedCommands.registerCommand("stop", new AlignWheelsCommand());
     NamedCommands.registerCommand("intakein", new IntakeInCommand());
     NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
 
