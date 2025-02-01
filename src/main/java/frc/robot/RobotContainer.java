@@ -128,13 +128,13 @@ public class RobotContainer {
     //resets wheels
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    /* 2/1/2025 running a command to determine the level the elevator goes to according to the button that is clicked (atm, clicking A means it'll go to level1 but
-    this is just a placeholder for now.) note that theres a problem with the first whiletrue and the sequential commadn that follows - this is commented out so that
-    can be fixed
+   // 2/1/2025 running a command to determine the level the elevator goes to according to the button that is clicked (atm, clicking A means it'll go to level1 but
+   // 2/1/2025 this is just a placeholder for now.) the two whiletrue's are si[[psed tp be a seqiemtoa; cp,,amd not working - until thats figured out here they are in succession!
     new JoystickButton(m_driverController, Button.kA.value)
-    .whileTrue(new SequentialCommandGroup(new RunCommand(() -> m_ElevatorSubsystem.setConstants(Constants.CoralLevels.level1, true), m_ElevatorSubsystem)), new ElevatorCommand())
+    .whileTrue(new RunCommand(() -> m_ElevatorSubsystem.setConstants(Constants.CoralLevels.level1, true), m_ElevatorSubsystem))
+    .whileTrue(new ElevatorCommand())
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-*/
+
     //How are we making the elevator go down? - George
   
     //B Button: Intake
