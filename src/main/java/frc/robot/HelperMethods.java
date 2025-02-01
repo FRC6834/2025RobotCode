@@ -9,12 +9,20 @@ public class HelperMethods {
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
 
 
-    //uses law of sines to trianglulate distance
-    public double getDistance(){
-        final double TARGET_HEIGHT = getAprilTagHeight(); //placeholder. make a list of IDS and their height later
-        final double TARGET_OFFSET = Math.abs(TARGET_HEIGHT-LIMELIGHT_HEIGHT);
-        final double APRILTAG_ANGLE = Math.abs(90.0-LIMELIGHT_MOUNT_ANGLE);
-        return (TARGET_OFFSET*(Math.sin(APRILTAG_ANGLE)))/Math.sin(LIMELIGHT_MOUNT_ANGLE);
+    //uses trig to trianglulate distance
+    public double getDistance(){       
+        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        final double targetAngleOffset = table.getEntry("ty").getDouble(0.0);
+
+        final double tagHeight = getAprilTagHeight();
+        
+        final double targetHeightOffset = tagHeight-LIMELIGHT_HEIGHT;
+        
+        final double totalAngleDegrees = LIMELIGHT_MOUNT_ANGLE+targetAngleOffset;
+        final double totalAngleRadians = totalAngleDegrees*(3.14159/180.0);
+
+        System.out.println("apriltag ID: "+table.getEntry("tid").getDouble(-1.0));
+        return targetHeightOffset/Math.tan(totalAngleRadians);
     }
 
     //returns the angle needed to turn to face the apriltag, in radians
@@ -24,6 +32,7 @@ public class HelperMethods {
         final double cameraLensHorizontalOffset = LimelightHelpers.getTX("limelight")/getDistance();
         final double realHorizontalOffset = Math.atan(cameraLensHorizontalOffset/getDistance());
         final double rotationError = Math.atan(realHorizontalOffset / getDistance());
+        System.out.println("test");
         return rotationError;
     }
 
