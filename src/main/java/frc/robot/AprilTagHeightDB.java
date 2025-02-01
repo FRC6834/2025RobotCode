@@ -27,7 +27,7 @@ public class AprilTagHeightDB{
             case 18 -> 0.17;
             case 19 -> 0.17;
             case 20 -> 0.17;
-            case 21 -> 0.17;
+            case 21 -> 11.625; //this is placeholder for testing. equal to 11 5/8 inches. | actual height is 0.17
             case 22 -> 0.17;
             default -> -1;
         };

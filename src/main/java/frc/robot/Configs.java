@@ -53,4 +53,29 @@ public final class Configs {
                     .positionWrappingInputRange(0, turningFactor);
         }
     }
+
+    public static final class AlgaeSubsystem {
+    public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
+    public static final SparkMaxConfig pivotConfig = new SparkMaxConfig();
+
+    static {
+      // Configure basic setting of the arm motor
+      pivotConfig.smartCurrentLimit(40);
+
+      /*
+       * Configure the closed loop controller. We want to make sure we set the
+       * feedback sensor as the primary encoder.
+       */
+      pivotConfig
+          .closedLoop
+          .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+          // Set PID values for position control. We don't need to pass a closed
+          // loop slot, as it will default to slot 0.
+          .p(0.1)
+          .outputRange(-0.5, 0.5);
+
+      // Configure basic settings of the intake motor
+      intakeConfig.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
+    }
+  }
 }
