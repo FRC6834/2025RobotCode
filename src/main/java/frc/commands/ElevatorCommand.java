@@ -1,29 +1,29 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class ElevatorCommand extends Command{
-  private boolean goingUp = false;
-  private final ElevatorSubsystem subsystem = new ElevatorSubsystem(); //use this to call methods from the elevator subsystem
+  private double targetHeight; // 2/1/2025 the target height is what is passed through as the coral level that they want
+  private boolean isGoingUp; // 2/1/2025 this is used to managed 
+  final private ElevatorSubsystem subsystem = new ElevatorSubsystem();
 
-  //!!- yo whoever on elevator team make it stop at each coral level too -!!
-    
-  public ElevatorCommand(boolean isUp){
-    if(isUp){goingUp=true;
-    }else{goingUp=false;}
-  }
   //called when the command is initialized
   @Override
   public void initialize(){
-
+    isGoingUp = subsystem.isGoingUp;
+    targetHeight = subsystem.targetHeight;
+    
   }
   
   //called every time the command is scheduled
   @Override
   public void execute(){
-    if(goingUp){subsystem.elevatorUp();
-    }else{subsystem.elevatorDown();}
+    subsystem.moveToSetpoint(targetHeight);
   }
  
   @Override
