@@ -18,14 +18,14 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
     public double targetHeight;
     public boolean isGoingUp;
   
-    // initializing pid controller and encoder for elevator
+    // 2/1/2025 intitializing the pid controller (constants are TBD) and the encoder that links to motors
     PIDController elevatorPID = new PIDController(1.0, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
      private RelativeEncoder elevatorEncoder = kElevatorSubsystem.getEncoder();
   
-  // 2-1/2025 moving the elevator accordingly based on encoder + pid information
-  public void moveToSetpoint(double coralLevel){ // 2/1/2025 - setting the speed to move to the setpoint
-    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), coralLevel); // 2/1/2025 - using the pid controller to determine how the motor should move according to the elevator's current position (which is calculated by the encoder) and the goal current level 
-    kElevatorSubsystem.set(pidDifference); // 2/1/2025 - using the pidDifference to move the motor accordingly 
+  // 2-1/2025 using the pid controller + encoder to determine how the motor should move according to the elevator's current position according to the coral level it wants to go to
+  public void moveToSetpoint(double coralLevel){
+    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), coralLevel); 
+    kElevatorSubsystem.set(pidDifference); 
    }
   
      public void elevatorUp(){
@@ -45,5 +45,5 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
         targetHeight = level;
         isGoingUp = isUp;
       }
+      
     }
-  
