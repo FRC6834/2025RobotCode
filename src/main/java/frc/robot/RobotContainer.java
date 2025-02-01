@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -41,12 +45,18 @@ public class RobotContainer {
      boolean dRight = false;
      boolean dLeft = false;
 
-     switch(dPad){ //if theres issues with driving just change this to a bunch of if-statemnents
-      case 0: dUp = true;
-      case 90: dRight = true;
-      case 180: dDown = true;
-      case 270: dLeft = true;
-     }  
+     if (dPad == 0){
+      dUp = true;
+     }
+     if (dPad == 90) {
+      dRight = true;
+     }
+     if (dPad == 180) {
+      dDown = true;
+     }
+     if (dPad == 270) {
+      dLeft = true;
+     }    
 
 
     // Configure default commands
@@ -101,13 +111,14 @@ public class RobotContainer {
     //B Button: Intake
     //Which intake is this? - George
     new JoystickButton(m_driverController, Button.kB.value)
-      .whileTrue(new RunCommand(() -> m_IntakeSubsystem.intakeIn(), m_IntakeSubsystem))
+      .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
 
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
-    //X Button
-    new JoystickButton(m_driverController, Button.kX.value); //empty rn 
+    //X Button: Test Limelight Distance estimation
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whileTrue(new RunCommand(() -> m_limelight.alignDistance(), m_limelight));
 }
 
   /**

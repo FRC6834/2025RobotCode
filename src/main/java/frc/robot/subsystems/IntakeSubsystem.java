@@ -11,18 +11,19 @@ import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
-  private final SparkMax kIntakeSystem = new SparkMax(IntakeConstants.kIntakeSystem, MotorType.kBrushless);
+   private final SparkMax kIntakeSystem = new SparkMax(IntakeConstants.kIntakeSystem, MotorType.kBrushless);
 
-  public void intakeIn(){
-    kIntakeSystem.set(1);
-  }
+   public void startIntake(){
+     kIntakeSystem.set(1);
+   }
 
-  public void shootIntake(){
-    kIntakeSystem.set(-1);
-  }
-
-  public void stopIntake(){
+   public void stopIntake(){
     kIntakeSystem.set(0);
   }
+
+     public void shootIntake(){
+    kIntakeSystem.set(-1);
+  }
+  
 }
   

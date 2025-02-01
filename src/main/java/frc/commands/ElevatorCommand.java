@@ -5,23 +5,18 @@ import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ElevatorCommand extends Command{
   private boolean goingUp = false;
-  private double level = -1; //the height the elevator needs to go up to
-  private double currentHeight = -1; //the height that the elevator is currently at use encoders to update this
-  private ElevatorSubsystem subsystem; //use this to call methods from the elevator subsystem
+  private final ElevatorSubsystem subsystem = new ElevatorSubsystem(); //use this to call methods from the elevator subsystem
 
   //!!- yo whoever on elevator team make it stop at each coral level too -!!
     
-
-  public ElevatorCommand(boolean isUp, double level){
-    this.level = level;
+  public ElevatorCommand(boolean isUp){
     if(isUp){goingUp=true;
     }else{goingUp=false;}
   }
-  
   //called when the command is initialized
   @Override
   public void initialize(){
-    subsystem = new ElevatorSubsystem(level);
+
   }
   
   //called every time the command is scheduled
