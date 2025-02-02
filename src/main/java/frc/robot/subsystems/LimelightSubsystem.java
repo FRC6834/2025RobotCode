@@ -9,7 +9,7 @@ import frc.robot.Constants;
 
 public class LimelightSubsystem extends SubsystemBase{
 
-    final private static DriveSubsystem drive = new DriveSubsystem();
+    //final private static DriveSubsystem drive = new DriveSubsystem();
     private static final double LIMELIGHT_MOUNT_ANGLE = Constants.LimelightConstants.MOUNT_ANGLE;
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
     
@@ -20,7 +20,7 @@ public class LimelightSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
         final double distanceMeters = distance/39.37;
         final double angle = getAngle();
-        new DriveCommand(drive, distanceMeters, 1,1,angle);
+        //new DriveCommand(drive, distanceMeters, 1,1,angle);
     }
                         
     public static double getAngle(){
