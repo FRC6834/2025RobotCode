@@ -9,18 +9,18 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.*;
-import frc.commands.IntakeInCommand;
-import frc.commands.IntakeShootCommand;
-import frc.commands.ElevatorCommand;
-import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.commands.IntakeInCommand;
+import frc.commands.IntakeShootCommand;
+import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -126,13 +126,38 @@ public class RobotContainer {
     //resets wheels
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-   // 2/1/2025 running a command to determine the level the elevator goes to according to the button that is clicked (atm, clicking A means it'll go to level1 but
-   // 2/1/2025 this is just a placeholder for now.) the two whiletrue's are si[[psed tp be a seqiemtoa; cp,,amd not working - until thats figured out here they are in succession!
-    new JoystickButton(m_driverController, Button.kA.value)
-    .whileTrue(new RunCommand(() -> m_ElevatorSubsystem.setConstants(Constants.CoralLevels.level1, true), m_ElevatorSubsystem))
-    .whileTrue(new ElevatorCommand())
-    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-
+    /* 2/6/2025 the code below sets the A button on the controller to determine the level of the reef the elevator heads to. each
+    time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
+    buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
+    statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range 
+ */
+        int buttonAClicks = -1;
+        new JoystickButton(m_driverController, Button.kA.value) 
+        .whileTrue(new RunCommand(() ->
+        { 
+         switch(buttonAClicks) {
+           case -1:
+             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
+             break;
+           case 0:
+             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+             break;
+           case 1:
+             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
+             break;
+           case 2:
+             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
+             break; 
+           }
+           if (buttonAClicks != 2) {
+             buttonAClicks++;
+           } else {
+             buttonAClicks = -1;
+           }
+        },
+       m_ElevatorSubsystem, new ElevatorCommand()))
+       .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+       
     //How are we making the elevator go down? - George
   
     //B Button: Intake

@@ -20,11 +20,11 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
   
     // 2/1/2025 intitializing the pid controller (constants are TBD) and the encoder that links to motors
     PIDController elevatorPID = new PIDController(1.0, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
-     private RelativeEncoder elevatorEncoder = kElevatorSubsystem.getEncoder();
+    private RelativeEncoder elevatorEncoder = kElevatorSubsystem.getEncoder();
   
-  // 2-1/2025 using the pid controller + encoder to determine how the motor should move according to the elevator's current position according to the coral level it wants to go to
-  public void moveToSetpoint(double coralLevel){
-    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), coralLevel); 
+  // 2/1/2025 using the pid controller + encoder to determine how the motor should move according to the elevator's current position according to the coral level it wants to go to
+  public void moveToSetpoint(double reefLevel){
+    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), reefLevel); 
     kElevatorSubsystem.set(pidDifference); 
    }
   

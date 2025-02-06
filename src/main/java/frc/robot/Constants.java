@@ -131,8 +131,8 @@ public final class Constants {
     public static final double MOUNT_HEIGHT = 3.5; //vertical distance from ground to the limelight IN INCHES the LL is currently mounted at 3.5 inches or 0.0889 meters
   }
 
-  // 2/1/2025 height in inches for each of the coral levels
-  public static class CoralLevels {
+  // 2/1/2025 height in inches for each of the reef levels
+  public static class ReefLevels {
     public static final double level1 = 18;
     public static final double level2 = 31.875;
     public static final double level3 = 47.0625;

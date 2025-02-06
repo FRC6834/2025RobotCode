@@ -6,7 +6,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class ElevatorCommand extends Command{
 
   private double targetHeight; // 2/1/2025 setting the target height + the boolean that makes sure the elevator doesnt operate while intake is still going
-  private boolean isGoingUp; 
+  private boolean isGoingUp;
   final private ElevatorSubsystem subsystem = new ElevatorSubsystem();
 
   //called when the command is initialized
