@@ -128,7 +128,7 @@ public class RobotContainer {
     //resets wheels
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    /* 2/6/2025 the code below sets the A button on the controller to determine the level of the reef the elevator heads to. each
+    /* 2/6/2025 the code below sets the A button on the xbox controller to determine the level of the reef the elevator heads to. each
     time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
     buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
     statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range */
