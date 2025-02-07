@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,7 +20,7 @@ import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
 /*
@@ -33,10 +34,11 @@ public class RobotContainer {
   public static boolean dUp;
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final CoralIntakeSubsystem m_IntakeSubsystem = new CoralIntakeSubsystem();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final LimelightSubsystem m_limelight = new LimelightSubsystem();
   private final SendableChooser<Command> autoChooser;
+  int buttonAClicks = -1;
   
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -129,9 +131,8 @@ public class RobotContainer {
     /* 2/6/2025 the code below sets the A button on the controller to determine the level of the reef the elevator heads to. each
     time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
     buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
-    statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range 
- */
-        int buttonAClicks = -1;
+    statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range */
+        //int buttonAClicks = -1;
         new JoystickButton(m_driverController, Button.kA.value) 
         .whileTrue(new RunCommand(() ->
         { 
@@ -154,8 +155,7 @@ public class RobotContainer {
            } else {
              buttonAClicks = -1;
            }
-        },
-       m_ElevatorSubsystem, new ElevatorCommand()))
+        }, m_ElevatorSubsystem))
        .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
        
     //How are we making the elevator go down? - George

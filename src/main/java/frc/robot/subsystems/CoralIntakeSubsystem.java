@@ -10,7 +10,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class CoralIntakeSubsystem extends SubsystemBase {
    private final SparkMax kIntakeSystem = new SparkMax(IntakeConstants.kIntakeSystem, MotorType.kBrushless);
 
    public void startIntake(){
