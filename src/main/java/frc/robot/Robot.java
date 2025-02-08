@@ -7,6 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Apriltagdriver;
+import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.Limelightwebcam;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -14,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
@@ -23,6 +27,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -37,6 +42,7 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -47,6 +53,7 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
+
   @Override
   public void disabledInit() {}
 
@@ -54,9 +61,10 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -72,11 +80,12 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during autonomous. */
+
   @Override
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {
+  public void teleopInit(){
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -87,16 +96,24 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
+
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    Apriltagdriver.Lightupsketchers();
+    Apriltagdriver.levatate();
+    Limelightwebcam.webcam1();
+  }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
+    LimelightSubsystem.align();
+
     CommandScheduler.getInstance().cancelAll();
   }
 
   /** This function is called periodically during test mode. */
+
   @Override
   public void testPeriodic() {}
 }

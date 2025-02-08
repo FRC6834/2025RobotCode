@@ -59,6 +59,32 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
   }
 
+  public static final class IntakeConstants {
+    public static final int kIntakeSystem = 9;
+    
+  }
+
+  public static final class ElevatorConstants {
+    public static final int kElevatorSubsystem = 10;
+  }
+
+  public static final class AlgaeConstants {
+    public static final int kAlgaeIntake = 11;
+    public static final int kAlgaePivot = 12;
+
+    public static final class ArmSetpoints {
+      public static final double kStow = 18.5;
+      public static final double kHold = 11.5;
+      public static final double kDown = 0;
+    }
+
+    public static final class IntakeSetpoints {
+      public static final double kForward = 0.5;
+      public static final double kReverse = -0.5;
+      public static final double kHold = 0.25;
+    }
+  }
+
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
@@ -78,7 +104,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.05;
+    public static final double kDriveDeadband = 0.1;
   }
 
   public static final class AutoConstants {
@@ -99,4 +125,20 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  public static final class LimelightConstants{
+    public static final double MOUNT_ANGLE = 0; 
+    public static final double MOUNT_HEIGHT = 3.5; //vertical distance from ground to the limelight IN INCHES the LL is currently mounted at 3.5 inches or 0.0889 meters
+  }
+
+  // 2/1/2025 height in inches for each of the reef levels
+  public static class ReefLevels {
+    public static final double level1 = 18;
+    public static final double level2 = 31.875;
+    public static final double level3 = 47.0625;
+    public static final double level4 = 72;
+  }
+
 }
+
+
