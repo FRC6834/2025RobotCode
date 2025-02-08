@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.commands.IntakeInCommand;
+import frc.commands.CoralIntakeInCommand;
 import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
@@ -31,59 +31,59 @@ import frc.robot.subsystems.LimelightSubsystem;
  */
 public class RobotContainer {
   
-  public static boolean dUp;
-  // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final CoralIntakeSubsystem m_IntakeSubsystem = new CoralIntakeSubsystem();
-  private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-  private final LimelightSubsystem m_limelight = new LimelightSubsystem();
-  private final SendableChooser<Command> autoChooser;
-  int buttonAClicks = -1;
+    public static boolean dUp;
+    // The robot's subsystems
+    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
+    private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+    private final LimelightSubsystem m_limelight = new LimelightSubsystem();
+    private final SendableChooser<Command> autoChooser;
+    int buttonAClicks = -1;
+      
+      // The driver's controller
+    XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+    
+      /**
+       * The container for the robot. Contains subsystems, OI devices, and commands.
+       */
+      
+    public RobotContainer() {
+            // ...
+    
+      // Build an auto chooser. This will use Commands.none() as the default option.
+      autoChooser = AutoBuilder.buildAutoChooser();
   
-  // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+      // Another option that allows you to specify the default auto by its name
+      // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
   
-  public RobotContainer() {
-        // ...
-
-    // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser();
-
-    // Another option that allows you to specify the default auto by its name
-    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-
-    //named and registered commands for path planner
-    NamedCommands.registerCommand("intakein", new IntakeInCommand());
-    NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
+      SmartDashboard.putData("Auto Chooser", autoChooser);
+  
+      //named and registered commands for path planner
+      NamedCommands.registerCommand("intakein", new CoralIntakeInCommand());
+      NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
 
 
-    // Configure the button bindings
-    configureButtonBindings();
+      // Configure the button bindings
+      configureButtonBindings();
 
-     int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
-     boolean dUp = false;
-     boolean dDown = false;
-     boolean dRight = false;
-     boolean dLeft = false;
+      int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
+      boolean dUp = false;
+      boolean dDown = false;
+      boolean dRight = false;
+      boolean dLeft = false;
 
-     if (dPad == 0){
-      dUp = true;
-     }
-     if (dPad == 90) {
-      dRight = true;
-     }
-     if (dPad == 180) {
-      dDown = true;
-     }
-     if (dPad == 270) {
-      dLeft = true;
-     }    
+      if (dPad == 0){
+        dUp = true;
+      }
+      if (dPad == 90) {
+        dRight = true;
+      }
+      if (dPad == 180) {
+        dDown = true;
+      }
+      if (dPad == 270) {
+        dLeft = true;
+      }    
 
 
     // Configure default commands
@@ -162,9 +162,10 @@ public class RobotContainer {
   
     //B Button: Intake
     //Which intake is this? - George
+    //The coral intake. Looks like maryam changed the subsystem name but not the code names. I changed it 2/8/25 - Sabina Sinchuri
     new JoystickButton(m_driverController, Button.kB.value)
-      .whileTrue(new RunCommand(() -> m_IntakeSubsystem.startIntake(), m_IntakeSubsystem))
-      .whileFalse(new RunCommand(() -> m_IntakeSubsystem.stopIntake(), m_IntakeSubsystem));
+      .whileTrue(new RunCommand(() -> m_CoralIntakeSubsystem.startIntake(), m_CoralIntakeSubsystem))
+      .whileFalse(new RunCommand(() -> m_CoralIntakeSubsystem.stopIntake(), m_CoralIntakeSubsystem));
 
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
