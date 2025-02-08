@@ -63,6 +63,9 @@ public final class Constants {
     public static final int kIntakeSystem = 9;
     
   }
+  public static final class ArmConstants {
+    public static final int kArmSystem = 13;
+  }
 
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystem = 10;
