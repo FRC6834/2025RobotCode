@@ -141,7 +141,6 @@ public final class Constants {
     public static final double level3 = 47.0625;
     public static final double level4 = 72;
   }
-
 }
 
 
