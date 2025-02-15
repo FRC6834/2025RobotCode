@@ -132,7 +132,6 @@ public class RobotContainer {
     time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
     buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
     statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range */
-        //int buttonAClicks = -1;
         new JoystickButton(m_driverController, Button.kA.value) 
         .whileTrue(new RunCommand(() ->
         { 

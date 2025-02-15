@@ -21,7 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
     public double elevatorSprocketRadiusInInches = 1.5; // 2/15/2025 placeholder number - this will need to be measured and made accurate to irl
 
     // 2/1/2025 intitializing the pid controller (constants are TBD) and the encoder that links to motors
-    PIDController elevatorPID = new PIDController(1.0, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
+    PIDController elevatorPID = new PIDController(0.0000001, 0.0, 0.0); // 2/1/2025 - idk what the constants here should be, will figure out soon
     private RelativeEncoder elevatorEncoder = kElevatorSubsystem.getEncoder();
 
 
@@ -29,8 +29,8 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
   
   // 2/1/2025 using the pid controller + encoder to determine how the motor should move according to the elevator's current position according to the coral level it wants to go to
   public void moveToSetpoint(double reefLevel){
-    double setPoint = reefLevel/(2* Math.PI*elevatorSprocketRadiusInInches);
-    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), setPoint); 
+    double setpoint = reefLevel/(2 * Math.PI * elevatorSprocketRadiusInInches);
+    double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), setpoint); 
     kElevatorSubsystem.set(pidDifference); 
    }
   
