@@ -149,7 +149,7 @@ public class RobotContainer {
              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
              break; 
            }
-           if (buttonAClicks != 2) {
+           if (buttonAClicks < 2) {
              buttonAClicks++;
            } else {
              buttonAClicks = -1;
