@@ -9,6 +9,13 @@ import frc.robot.Constants;
 
 public class LimelightSubsystem extends SubsystemBase{
 
+    public static void limelightinfo(){
+        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        final String pipelinename = table.getEntry("tx").getString("");
+        final Double getpipe = table.getEntry("getpipe").getDouble(0);
+        System.out.println(pipelinename);
+        System.out.println(getpipe);
+    }
     //final private static DriveSubsystem drive = new DriveSubsystem();
     private static final double LIMELIGHT_MOUNT_ANGLE = Constants.LimelightConstants.MOUNT_ANGLE;
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;

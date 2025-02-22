@@ -7,7 +7,7 @@ import frc.robot.Constants.ElevatorConstants;
 
 
 public class Apriltagdriver{
-    public static void Lightupsketchers(){
+    public static void LedLightup(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         double tagID =  table.getEntry("tid").getDouble(0); //stupid syntax error that makes no sense; ill fix later
 
@@ -19,16 +19,16 @@ public class Apriltagdriver{
         table.getEntry("ledMode").setNumber(1);  // 1 means turn off LEDs
         }
     }
-    public static void levatate(){
+    public static void Apriltagfound(){
         
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        double tagID =  table.getEntry("tid").getDouble(0);
-        final SparkMax kElevatorSubsystem = new SparkMax(ElevatorConstants.kElevatorSubsystem, MotorType.kBrushless);
+        double TagFound =  table.getEntry("tv").getDouble(0);
+        
 
-        if(tagID == 7){
-        kElevatorSubsystem.set(-.75);
+        if(TagFound == 1){
+        System.out.println("Apriltag Found!");
         }else{
-        kElevatorSubsystem.set(.75);
+        System.out.println("Apriltag lost!");
         }
     }
 }
