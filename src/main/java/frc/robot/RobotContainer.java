@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commands.CoralIntakeInCommand;
 import frc.commands.IntakeShootCommand;
@@ -38,10 +39,11 @@ public class RobotContainer {
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
     private final SendableChooser<Command> autoChooser;
-    int buttonAClicks = -1;
-      
+    int bumperClicks = 0;
+
       // The driver's controller
     XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+    CommandXboxController commandm_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
     
       /**
        * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -128,36 +130,55 @@ public class RobotContainer {
     //resets wheels
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    /* 2/6/2025 the code below sets the A button on the xbox controller to determine the level of the reef the elevator heads to. each
-    time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
-    buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
-    statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range */
-        new JoystickButton(m_driverController, Button.kA.value) 
-        .whileTrue(new RunCommand(() ->
-        { 
-         switch(buttonAClicks) {
-           case -1:
-             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
-             break;
-           case 0:
-             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
-             break;
+    // 2/22/2025 setting the left bumper so each time it's clicked the target reef level for the elevator increments UP
+       new JoystickButton(m_driverController, Button.kLeftBumper.value) 
+       .whileTrue(new RunCommand(() ->
+       {
+            bumperClicks++;
+            switch (bumperClicks) {
+              case 1:
+              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
+              break;
+              case 2:
+              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+              break;
+              case 3:
+              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
+              break;
+              case 4:
+              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
+              break;       
+        }
+      }, m_ElevatorSubsystem))
+      .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+
+      // 2/22/2025 setting the right bumper so each time it's clicked the target reef level for the elevator increments DOWN
+      new JoystickButton(m_driverController, Button.kRightBumper.value) 
+      .whileTrue(new RunCommand(() ->
+      { 
+         bumperClicks--;
+         switch (bumperClicks) {
            case 1:
-             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
-             break;
+           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+           break;
            case 2:
-             m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
-             break; 
-           }
-           if (buttonAClicks < 2) {
-             buttonAClicks++;
-           } else {
-             buttonAClicks = -1;
-           }
-        }, m_ElevatorSubsystem))
-       .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-       
-    //How are we making the elevator go down? - George
+           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+           break;
+           case 3:
+           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
+           break;
+           case 4:
+           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
+           break;       
+         }
+     }, m_ElevatorSubsystem))
+     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+  
+       // 2/22/2025 setting the triggers to make the elevator go up/down/stop MANUALLY 
+       commandm_driverController.leftTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
+       commandm_driverController.leftTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+       commandm_driverController.rightTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorDown(), m_ElevatorSubsystem));
+       commandm_driverController.rightTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
   
     //B Button: Intake
     //Which intake is this? - George
