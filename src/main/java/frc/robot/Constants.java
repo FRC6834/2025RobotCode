@@ -72,8 +72,8 @@ public final class Constants {
 
     public static final class ArmSetpoints {
       public static final double kHome = 0.0;
-      public static final double kScore_L1_to_L4 = 5 + 5/6;
-      public static final double kFeederStation = 39 + 1/6;
+      public static final double kScore_L1_to_L4 = 1 + 1/6;
+      public static final double kFeederStation = 19 + 1/2;
     }
   }
 
