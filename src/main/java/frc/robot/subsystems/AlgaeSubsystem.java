@@ -84,12 +84,11 @@ public class AlgaeSubsystem extends SubsystemBase {
    *      -George
    */
   public Command collectIntakeCommand() {
-    return this.run(
-        () -> {
-          stowWhenIdle = false;
-          setIntakePower(AlgaeConstants.IntakeSetpoints.kForward);
-          setIntakePosition(AlgaeConstants.ArmSetpoints.kDown);
-        });
+    return this.run(() -> {
+      stowWhenIdle = false;
+      setIntakePower(AlgaeConstants.AlgaeIntakeSetpoints.kForward);
+      setIntakePosition(AlgaeConstants.AlgaeArmSetpoints.kDown);
+    });
   }
 
   /*
@@ -105,8 +104,8 @@ public class AlgaeSubsystem extends SubsystemBase {
     return this.run(
         () -> {
           stowWhenIdle = true;
-          setIntakePower(AlgaeConstants.IntakeSetpoints.kReverse);
-          setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
+          setIntakePower(AlgaeConstants.AlgaeIntakeSetpoints.kReverse);
+          setIntakePosition(AlgaeConstants.AlgaeArmSetpoints.kHold);
         });
   }
 
@@ -129,10 +128,10 @@ public class AlgaeSubsystem extends SubsystemBase {
         () -> {
           if (stowWhenIdle) {
             setIntakePower(0.0);
-            setIntakePosition(AlgaeConstants.ArmSetpoints.kStow);
+            setIntakePosition(AlgaeConstants.AlgaeArmSetpoints.kStow);
           } else {
-            setIntakePower(AlgaeConstants.IntakeSetpoints.kHold);
-            setIntakePosition(AlgaeConstants.ArmSetpoints.kHold);
+            setIntakePower(AlgaeConstants.AlgaeIntakeSetpoints.kHold);
+            setIntakePosition(AlgaeConstants.AlgaeArmSetpoints.kHold);
           }
         });
   }
@@ -151,10 +150,9 @@ public class AlgaeSubsystem extends SubsystemBase {
   public void periodic() {
     zeroOnUserButton();
 
-    // Display subsystem values
+    //Display subsystem values
     SmartDashboard.putNumber("Algae/Arm/Position", pivotEncoder.getPosition());
     SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
-
   }
 
 }

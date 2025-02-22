@@ -77,5 +77,9 @@ public final class Configs {
       // Configure basic settings of the intake motor
       intakeConfig.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
     }
+
+    public static final class ArmSubsystemConfig {
+        public static final SparkMaxConfig armConfig = new SparkMaxConfig();
+    }
   }
 }

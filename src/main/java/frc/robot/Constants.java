@@ -66,26 +66,34 @@ public final class Constants {
     public static final int kIntakeSystem = 9;
     
   }
+
   public static final class ArmConstants {
     public static final int kArmSystem = 13;
+
+    public static final class ArmSetpoints {
+      public static final double kHome = 0.0;
+      public static final double kScore_L1_to_L4 = 5 + 5/6;
+      public static final double kFeederStation = 39 + 1/6;
+    }
   }
 
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystemMain = 10;
     public static final int kElevatorSubsystemFollower = 200; // this will be where the canID for the second motor for the elevator will go. itll just follow the other motor, the canID assigned is just a placeholder
+    public static final int kElevatorSubsystem = 10;
   }
 
   public static final class AlgaeConstants {
     public static final int kAlgaeIntake = 11;
     public static final int kAlgaePivot = 12;
 
-    public static final class ArmSetpoints {
+    public static final class AlgaeArmSetpoints {
       public static final double kStow = 18.5;
       public static final double kHold = 11.5;
       public static final double kDown = 0;
     }
 
-    public static final class IntakeSetpoints {
+    public static final class AlgaeIntakeSetpoints {
       public static final double kForward = 0.5;
       public static final double kReverse = -0.5;
       public static final double kHold = 0.25;

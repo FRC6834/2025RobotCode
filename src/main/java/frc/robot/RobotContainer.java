@@ -8,19 +8,21 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commands.CoralIntakeInCommand;
 import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ArmConstants.ArmSetpoints;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
@@ -36,14 +38,15 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
+    private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
     private final SendableChooser<Command> autoChooser;
-    int bumperClicks = 0;
-
+    int buttonYClicks = 0;
+    int buttonAClicks = -1;
+      
       // The driver's controller
-    XboxController XboxController = new XboxController(OIConstants.kDriverControllerPort);
-    CommandXboxController CommandXboxController = new CommandXboxController(OIConstants.kDriverControllerPort);
+    XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
     
       /**
        * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,7 +71,7 @@ public class RobotContainer {
       // Configure the button bindings
       configureButtonBindings();
 
-      int dPad = XboxController.getPOV(); //scans to see which directional arrow is being pushed
+      int dPad = m_driverController.getPOV(); //scans to see which directional arrow is being pushed
       boolean dUp = false;
       boolean dDown = false;
       boolean dRight = false;
@@ -94,9 +97,9 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(XboxController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(XboxController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(XboxController.getRightX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true),
             m_robotDrive));
             
@@ -128,74 +131,66 @@ public class RobotContainer {
     //For example, left (L1), down (L2), right (L3), up (L4)
     
     //resets wheels
-    new JoystickButton(XboxController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
+    new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    // 2/22/2025 setting the left bumper so each time it's clicked the target reef level for the elevator increments UP
-    new JoystickButton(XboxController, Button.kLeftBumper.value) 
-    .whileTrue(new RunCommand(() ->
-    {
-      if (0<bumperClicks && bumperClicks<4) {     
-        bumperClicks++;
-        switch (bumperClicks) {
-          case 1:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
-          break;
-          case 2:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
-          break;
-          case 3:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
-          break;
-          case 4:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
-          break;       
-        }
-      }
-    }, m_ElevatorSubsystem))
-    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-    
-    // 2/22/2025 setting the right bumper so each time it's clicked the target reef level for the elevator increments DOWN
-    new JoystickButton(XboxController, Button.kRightBumper.value) 
+    /* 2/6/2025 the code below sets the A button on the xbox controller to determine the level of the reef the elevator heads to. each
+    time the a button is clicked, it cycles to a different level, and loops each time the highest level is reached. the 
+    buttonAClicks variable manages the number of times the A button was clicked, and a switch within the whileTrue determines this. an if 
+    statement manages the value of the buttonAClicks variable and keeps it applicable within a certain range */
+    new JoystickButton(m_driverController, Button.kA.value) 
     .whileTrue(new RunCommand(() ->
     { 
-      if (1<bumperClicks && bumperClicks<5) {     
-        bumperClicks--;
-        switch (bumperClicks) {
-          case 1:
+      switch(buttonAClicks) {
+        case -1:
           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
           break;
-          case 2:
+        case 0:
           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
           break;
-          case 3:
+        case 1:
           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
           break;
-          case 4:
+        case 2:
           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
-          break;       
+          break; 
         }
-      }
+        if (buttonAClicks < 2) {
+          buttonAClicks++;
+        } else {
+          buttonAClicks = -1;
+        }
     }, m_ElevatorSubsystem))
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-  
-       // 2/22/2025 setting the triggers to make the elevator go up/down/stop MANUALLY 
-       CommandXboxController.leftTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
-       CommandXboxController.leftTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-       CommandXboxController.rightTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorDown(), m_ElevatorSubsystem));
-       CommandXboxController.rightTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+
+    new JoystickButton(m_driverController, Button.kY.value).whileTrue(new RunCommand(() -> {
+      switch (buttonYClicks) {
+        case 1: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kScore_L1_to_L4);
+          break;
+        case 2: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kFeederStation);
+          break;
+        case 0: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kHome);
+          break;
+      }
+
+      if (buttonYClicks < 2) {
+        buttonYClicks++;
+      } else {
+        buttonYClicks = 0;
+      }
+    }, m_ArmSubsystem)).whileFalse(new RunCommand(() -> m_ArmSubsystem.armStop(), m_ArmSubsystem));
   
     //B Button: Intake
     //Which intake is this? - George
     //The coral intake. Looks like maryam changed the subsystem name but not the code names. I changed it 2/8/25 - Sabina Sinchuri
-    new JoystickButton(XboxController, Button.kB.value)
+    new JoystickButton(m_driverController, Button.kB.value)
       .whileTrue(new RunCommand(() -> m_CoralIntakeSubsystem.startIntake(), m_CoralIntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_CoralIntakeSubsystem.stopIntake(), m_CoralIntakeSubsystem));
 
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
     //X Button: Test Limelight Distance estimation
-    new JoystickButton(XboxController, Button.kX.value)
-      .whileTrue(new RunCommand(() -> LimelightSubsystem.alignAngle(), m_limelight));
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whileTrue(new RunCommand(() -> LimelightSubsystem.align(), m_limelight));
 }
 
   /**
