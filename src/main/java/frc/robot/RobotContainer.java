@@ -180,6 +180,7 @@ public class RobotContainer {
       }
     }, m_ElevatorSubsystem))
     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+   
     // 2/22/2025 setting the triggers to make the elevator go up/down/stop MANUALLY 
      CommandXboxController.leftTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
      CommandXboxController.leftTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
