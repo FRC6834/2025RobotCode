@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.commands.DriveCommand;
 import frc.robot.AprilTagHeightDB;
@@ -14,7 +13,7 @@ public class LimelightSubsystem extends SubsystemBase{
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
     
     
-    public static void align(){
+    public void align(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         final double distance = getDistance();
         System.out.println("TAG DETECTED WITH ID "+table.getEntry("tid"));
@@ -35,7 +34,7 @@ public class LimelightSubsystem extends SubsystemBase{
     }
         
     //uses trig to trianglulate distance
-    private static double getDistance(){       
+    public double getDistance(){       
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         final double targetAngleOffset = table.getEntry("ty").getDouble(0.0);
 

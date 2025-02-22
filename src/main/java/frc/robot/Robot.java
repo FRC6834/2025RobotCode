@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.commands.LimelightAlignmentCommand;
 import frc.robot.subsystems.Apriltagdriver;
 import frc.robot.subsystems.LimelightSubsystem;
 
@@ -106,14 +107,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    // Cancels all running commands at the start of test mode.
-    LimelightSubsystem.align();
+    //placeholder code
+    final Command m_LimelightAlignmentCommand = new LimelightAlignmentCommand();
 
+    // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
+    m_LimelightAlignmentCommand.schedule();
+
   }
 
   /** This function is called periodically during test mode. */
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic(){}
 }
