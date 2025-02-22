@@ -131,48 +131,52 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
     // 2/22/2025 setting the left bumper so each time it's clicked the target reef level for the elevator increments UP
-       new JoystickButton(m_driverController, Button.kLeftBumper.value) 
-       .whileTrue(new RunCommand(() ->
-       {
-            bumperClicks++;
-            switch (bumperClicks) {
-              case 1:
-              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
-              break;
-              case 2:
-              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
-              break;
-              case 3:
-              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
-              break;
-              case 4:
-              m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
-              break;       
+    new JoystickButton(m_driverController, Button.kLeftBumper.value) 
+    .whileTrue(new RunCommand(() ->
+    {
+      if (0<bumperClicks && bumperClicks<4) {     
+        bumperClicks++;
+        switch (bumperClicks) {
+          case 1:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
+          break;
+          case 2:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+          break;
+          case 3:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
+          break;
+          case 4:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
+          break;       
         }
-      }, m_ElevatorSubsystem))
-      .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-
-      // 2/22/2025 setting the right bumper so each time it's clicked the target reef level for the elevator increments DOWN
-      new JoystickButton(m_driverController, Button.kRightBumper.value) 
-      .whileTrue(new RunCommand(() ->
-      { 
-         bumperClicks--;
-         switch (bumperClicks) {
-           case 1:
-           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
-           break;
-           case 2:
-           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
-           break;
-           case 3:
-           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
-           break;
-           case 4:
-           m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
-           break;       
-         }
-     }, m_ElevatorSubsystem))
-     .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+      }
+    }, m_ElevatorSubsystem))
+    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+    
+    // 2/22/2025 setting the right bumper so each time it's clicked the target reef level for the elevator increments DOWN
+    new JoystickButton(m_driverController, Button.kRightBumper.value) 
+    .whileTrue(new RunCommand(() ->
+    { 
+      if (0<bumperClicks && bumperClicks<4) {     
+        bumperClicks--;
+        switch (bumperClicks) {
+          case 1:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1, true);
+          break;
+          case 2:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2, true);
+          break;
+          case 3:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3, true);
+          break;
+          case 4:
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4, true);
+          break;       
+        }
+      }
+    }, m_ElevatorSubsystem))
+    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
   
        // 2/22/2025 setting the triggers to make the elevator go up/down/stop MANUALLY 
        commandm_driverController.leftTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
