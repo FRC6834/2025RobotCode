@@ -7,28 +7,28 @@ public class AprilTagHeightDB{
         public static double getHeight(double IDDouble){
         final int ID = (int)IDDouble;
          return switch(ID){
-            case 1 -> 5;
-            case 2 -> 5;
-            case 3 -> 1.17;
-            case 4 -> 1.78;
-            case 5 -> 1.78;
-            case 6 -> 0.17;
-            case 7 -> 0.17;
-            case 8 -> 0.17;
-            case 9 -> 0.17;
-            case 10 -> 0.17;
-            case 11 -> 0.17;
-            case 12 -> 5;
-            case 13 -> 5;
-            case 14 -> 1.78;
-            case 15 -> 1.78;
-            case 16 -> 1.17;
-            case 17 -> 0.17;
-            case 18 -> 0.17;
-            case 19 -> 0.17;
-            case 20 -> 0.17;
-            case 21 -> 11.625; //this is placeholder for testing. equal to 11 5/8 inches. | actual height is 0.17
-            case 22 -> 0.17;
+            case 1 -> 5; //placeholder
+            case 2 -> 5; //placeholder
+            case 3 -> 46.063;
+            case 4 -> 70.08;
+            case 5 -> 70.08;
+            case 6 -> 70.08;
+            case 7 -> 70.08;
+            case 8 -> 70.08;
+            case 9 -> 70.08;
+            case 10 -> 70.08;
+            case 11 -> 70.08;
+            case 12 -> 5; //placeholder
+            case 13 -> 5; //placeholder
+            case 14 -> 70.08;
+            case 15 -> 70.08;
+            case 16 -> 46.063;
+            case 17 -> 70.08;
+            case 18 -> 70.08;
+            case 19 -> 70.08;
+            case 20 -> 70.08;
+            case 21 -> 11.625; //this is placeholder for testing. equal to 11 5/8 inches. | actual height is 70.08
+            case 22 -> 70.08;
             default -> -1;
         };
     }

@@ -170,7 +170,7 @@ public class RobotContainer {
 
     //X Button: Test Limelight Distance estimation
     new JoystickButton(m_driverController, Button.kX.value)
-      .whileTrue(new RunCommand(() -> LimelightSubsystem.align(), m_limelight));
+      .whileTrue(new RunCommand(() -> LimelightSubsystem.alignAngle(), m_limelight));
 }
 
   /**
