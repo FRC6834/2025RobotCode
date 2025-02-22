@@ -16,11 +16,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.commands.CoralIntakeInCommand;
+import frc.commands.CoralIntakeCommand;
+import frc.commands.AlgaeIntakeCommand;
 import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
+import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -37,6 +39,7 @@ public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
+    private final AlgaeIntakeSubsystem m_AlgaeIntakeSubsystem = new AlgaeIntakeSubsystem();
     private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
@@ -64,7 +67,7 @@ public class RobotContainer {
       SmartDashboard.putData("Auto Chooser", autoChooser);
   
       //named and registered commands for path planner
-      NamedCommands.registerCommand("intakein", new CoralIntakeInCommand());
+      NamedCommands.registerCommand("intakein", new CoralIntakeCommand());
       NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
 
 
@@ -210,6 +213,10 @@ public class RobotContainer {
     new JoystickButton(XboxController, Button.kB.value)
       .whileTrue(new RunCommand(() -> m_CoralIntakeSubsystem.startIntake(), m_CoralIntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_CoralIntakeSubsystem.stopIntake(), m_CoralIntakeSubsystem));
+    
+    new JoystickButton(XboxController, Button.kA.value)
+      .whileTrue(new RunCommand(() -> m_AlgaeIntakeSubsystem.startAlgaeIntake(), m_AlgaeIntakeSubsystem))
+      .whileFalse(new RunCommand(() -> m_AlgaeIntakeSubsystem.stopAlgaeIntake(), m_AlgaeIntakeSubsystem));
 
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 

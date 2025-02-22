@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 
-public class CoralIntakeInCommand extends Command{
+public class CoralIntakeCommand extends Command{
 
     private final CoralIntakeSubsystem subsystem = new CoralIntakeSubsystem();
 
