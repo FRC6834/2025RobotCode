@@ -158,7 +158,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value) 
     .whileTrue(new RunCommand(() ->
     { 
-      if (0<bumperClicks && bumperClicks<4) {     
+      if (1<bumperClicks && bumperClicks<5) {     
         bumperClicks--;
         switch (bumperClicks) {
           case 1:
