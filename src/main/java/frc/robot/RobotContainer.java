@@ -23,6 +23,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
+import frc.robot.subsystems.Apriltagdriver;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -223,6 +224,8 @@ public class RobotContainer {
     //X Button: Test Limelight Distance estimation
     new JoystickButton(XboxController, Button.kX.value)
       .whileTrue(new RunCommand(() -> LimelightSubsystem.align(), m_limelight));
+    new JoystickButton(XboxController, Button.kX.value)
+      .whileTrue(new RunCommand(() -> Apriltagdriver.LedLightup())); // Nice to have as a visual indicator for distance tracking, also lights up the apriltag for better estimation.
 }
 
   /**

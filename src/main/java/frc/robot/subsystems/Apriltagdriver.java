@@ -7,11 +7,15 @@ import frc.robot.Constants.ElevatorConstants;
 
 
 public class Apriltagdriver{
+    
+    
+
     public static void LedLightup(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         double tagID =  table.getEntry("tid").getDouble(0); //stupid syntax error that makes no sense; ill fix later
-
-        if(tagID == 21){
+        
+        
+        if(tagID > 0 ){
         // Turn on light 
         table.getEntry("ledMode").setNumber(3);  // 3 means turn on LEDs
         }else{
@@ -19,6 +23,7 @@ public class Apriltagdriver{
         table.getEntry("ledMode").setNumber(1);  // 1 means turn off LEDs
         }
     }
+
     public static void Apriltagfound(){
         
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
