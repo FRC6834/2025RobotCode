@@ -13,28 +13,28 @@ public class LimelightSubsystem extends SubsystemBase{
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
     
     
-    public void align(){
+    public static void align(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         final double distance = getDistance();
-        System.out.println("TAG DETECTED WITH ID "+table.getEntry("tid"));
-        System.out.println("DISTANCE TO APRILTAG IN INCHES: "+distance);
-        //SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
-        //final double distanceMeters = distance/39.37;
-        final double angle = getHorizontalAngleRadians();
-    
-        new DriveCommand(drive, distance, 1,1,angle);
-
-
-    }
-                        
-    public static double getHorizontalAngleRadians(){
-        final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        final double angle = table.getEntry("tx").getDouble(0);
-        return angle*(Math.PI/180);
-    }
+                System.out.println("TAG DETECTED WITH ID "+table.getEntry("tid"));
+                System.out.println("DISTANCE TO APRILTAG IN INCHES: "+distance);
+                //SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
+                //final double distanceMeters = distance/39.37;
+                final double angle = getHorizontalAngleRadians();
+            
+                new DriveCommand(drive, distance, 1,1,angle);
         
-    //uses trig to trianglulate distance
-    public double getDistance(){       
+        
+            }
+                                
+            public static double getHorizontalAngleRadians(){
+                final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+                final double angle = table.getEntry("tx").getDouble(0);
+                return angle*(Math.PI/180);
+            }
+                
+            //uses trig to trianglulate distance
+            public static double getDistance(){       
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         final double targetAngleOffset = table.getEntry("ty").getDouble(0.0);
 
