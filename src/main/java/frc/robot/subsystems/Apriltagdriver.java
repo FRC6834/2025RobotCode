@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants.ElevatorConstants;
@@ -31,9 +33,9 @@ public class Apriltagdriver{
         
 
         if(TagFound == 1){
-        System.out.println("Apriltag Found!");
+        SmartDashboard.putString("Apriltag found?", "Yes!");
         }else{
-        System.out.println("Apriltag lost!");
+        SmartDashboard.putString("Apriltag found?", "No.");
         }
     }
 }
