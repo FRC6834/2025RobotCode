@@ -238,7 +238,7 @@ public class RobotContainer {
 
     //X Button: Test Limelight Distance estimation
     new JoystickButton(XboxController, Button.kX.value)
-      .whileTrue(new RunCommand(() -> LimelightSubsystem.align(), m_limelight));
+      .whileTrue(new RunCommand(() -> LimelightSubsystem.align(m_robotDrive), m_limelight));
     new JoystickButton(XboxController, Button.kX.value)
       .whileTrue(new RunCommand(() -> Apriltagdriver.LedLightup())); // Nice to have as a visual indicator for distance tracking, also lights up the apriltag for better estimation.
 }
