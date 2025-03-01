@@ -87,15 +87,9 @@ public final class Constants {
     public static final int kAlgaePivot = 12;
 
     public static final class AlgaeArmSetpoints {
-      public static final double kStow = 18.5;
-      public static final double kHold = 11.5;
-      public static final double kDown = 0;
-    }
-
-    public static final class AlgaeIntakeSetpoints {
-      public static final double kForward = 0.5;
-      public static final double kReverse = -0.5;
-      public static final double kHold = 0.25;
+      public static final double kHome = 0;
+      public static final double kGoDown = 11.3310; // rotations of the motor for larger gear to go 90 degrees
+      public static final double kGoUp = 11.3310; // roations to house ask
     }
   }
 

@@ -9,9 +9,6 @@ import frc.robot.Constants.ElevatorConstants;
 
 
 public class Apriltagdriver{
-    
-    
-
     public static void LedLightup(){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         double tagID =  table.getEntry("tid").getDouble(0); //stupid syntax error that makes no sense; ill fix later

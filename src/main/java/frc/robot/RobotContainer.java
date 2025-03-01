@@ -20,7 +20,7 @@ import frc.commands.CoralIntakeCommand;
 import frc.commands.AlgaeIntakeCommand;
 import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CoralArmSubsystem;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 import frc.robot.subsystems.Apriltagdriver;
@@ -38,10 +38,10 @@ public class RobotContainer {
   
     public static boolean dUp;
     // The robot's subsystems
-    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-    private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
     private final AlgaeIntakeSubsystem m_AlgaeIntakeSubsystem = new AlgaeIntakeSubsystem();
-    private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
+    private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
+    private final CoralArmSubsystem m_CoralArmSubsystem = new CoralArmSubsystem();
+    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
     private final SendableChooser<Command> autoChooser;
@@ -193,24 +193,40 @@ public class RobotContainer {
 
     new JoystickButton(XboxController, Button.kY.value).whileTrue(new RunCommand(() -> {
       switch (buttonYClicks) {
-        case 1: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kScore_L1_to_L4);
+        case 1: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kScore_L1_to_L4, true);
           break;
-        case 2: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kFeederStation);
+        case 2: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kFeederStation, true);
           break;
-        case 0: m_ArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kHome);
+        case 0: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kHome, true);
           break;
       }
 
+      // Resets the case value if case = 1
       if (buttonYClicks < 2) {
         buttonYClicks++;
       } else {
         buttonYClicks = 0;
       }
-    }, m_ArmSubsystem)).whileFalse(new RunCommand(() -> m_ArmSubsystem.armStop(), m_ArmSubsystem));
+    }, m_CoralArmSubsystem)).whileFalse(new RunCommand(() -> m_CoralArmSubsystem.armStop(), m_CoralArmSubsystem));
+
+    // Algae arm controller
+    new JoystickButton(XboxController, Button.kY.value).whileTrue(new RunCommand(() -> {
+      switch (buttonYClicks) {
+        case 0: m_CoralArmSubsystem.setConstants(Constants.AlgaeConstants.AlgaeArmSetpoints.kGoDown, true);
+          break;
+        case 1: m_CoralArmSubsystem.setConstants(Constants.AlgaeConstants.AlgaeArmSetpoints.kGoUp, true);
+          break;
+      }
+
+      // Resets the case value if case = 1
+      if (buttonYClicks < 1) {
+        buttonYClicks++;
+      } else {
+        buttonYClicks = 0;
+      }
+    }, m_CoralArmSubsystem)).whileFalse(new RunCommand(() -> m_CoralArmSubsystem.armStop(), m_CoralArmSubsystem));
   
     //B Button: Intake
-    //Which intake is this? - George
-    //The coral intake. Looks like maryam changed the subsystem name but not the code names. I changed it 2/8/25 - Sabina Sinchuri
     new JoystickButton(XboxController, Button.kB.value)
       .whileTrue(new RunCommand(() -> m_CoralIntakeSubsystem.startIntake(), m_CoralIntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_CoralIntakeSubsystem.stopIntake(), m_CoralIntakeSubsystem));
@@ -218,7 +234,6 @@ public class RobotContainer {
     new JoystickButton(XboxController, Button.kA.value)
       .whileTrue(new RunCommand(() -> m_AlgaeIntakeSubsystem.startAlgaeIntake(), m_AlgaeIntakeSubsystem))
       .whileFalse(new RunCommand(() -> m_AlgaeIntakeSubsystem.stopAlgaeIntake(), m_AlgaeIntakeSubsystem));
-
     //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
     //X Button: Test Limelight Distance estimation

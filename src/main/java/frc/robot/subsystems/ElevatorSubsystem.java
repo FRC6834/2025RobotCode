@@ -25,15 +25,15 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
     PIDController elevatorPID = new PIDController(0.0000001, 0.0, 0.0); // 2/1/2025 need 2 be determined with testing
     private RelativeEncoder elevatorEncoder = kElevatorSubsystemMain.getEncoder();
 
-    public void moveToSetpoint(double reefLevel){
+  public void moveToSetpoint(double reefLevel){
     double setpoint = reefLevel/(2 * Math.PI * elevatorSprocketCircumference); // 2/22/2025 dividing the height of the reefLevel we want to go to by the circumfrence of the elevator sprocket to figure out what the target number of rotations is, which is the setPoint
     double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), setpoint); 
     kElevatorSubsystemMain.set(pidDifference); 
     kElevatorSubsystemFollower.set(pidDifference); 
-   }
+  }
   
      public void elevatorUp(){
-       kElevatorSubsystemMain.set(-.75);
+      kElevatorSubsystemMain.set(-.75);
      }
   
      public void elevatorDown() {
@@ -45,9 +45,8 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
     }
   
  
-      public void setConstants(double level, boolean isUp){
-        targetHeight = level;
-        isGoingUp = isUp;
-      }
-      
+    public void setConstants(double level, boolean isUp){
+      targetHeight = level;
+      isGoingUp = isUp;
     }
+}
