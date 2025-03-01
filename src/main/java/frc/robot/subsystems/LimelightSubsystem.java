@@ -8,12 +8,11 @@ import frc.robot.Constants;
 
 public class LimelightSubsystem extends SubsystemBase{
 
-    final private static DriveSubsystem drive = new DriveSubsystem();
     private static final double LIMELIGHT_MOUNT_ANGLE = Constants.LimelightConstants.MOUNT_ANGLE;
     private static final double LIMELIGHT_HEIGHT = Constants.LimelightConstants.MOUNT_HEIGHT;
     
     
-    public static void align(){
+    public static void align(DriveSubsystem drive){
         final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         final double distance = getDistance();
                 System.out.println("TAG DETECTED WITH ID "+table.getEntry("tid"));
@@ -21,10 +20,7 @@ public class LimelightSubsystem extends SubsystemBase{
                 //SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
                 //final double distanceMeters = distance/39.37;
                 final double angle = getHorizontalAngleRadians();
-            
-                new DriveCommand(drive, distance, 1,1,angle);
-        
-        
+              new DriveCommand(drive, distance, 1,1,angle);
             }
                                 
             public static double getHorizontalAngleRadians(){
@@ -53,10 +49,12 @@ public class LimelightSubsystem extends SubsystemBase{
         final double ID = table.getEntry("tid").getDouble(0);
         return AprilTagHeightDB.getHeight(ID);
     }
-
-    //terrible jank code as a placeholder for testing
+    
+  /*  
+//terrible jank code as a placeholder for testing
     public static void alignAngle(){
         double angle = getHorizontalAngleRadians();
         new DriveCommand(drive, 0, 1,1,angle);
     }
+         */
 }
