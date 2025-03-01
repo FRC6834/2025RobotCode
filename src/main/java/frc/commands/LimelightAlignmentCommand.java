@@ -9,12 +9,11 @@ import frc.robot.subsystems.LimelightSubsystem;
 public class LimelightAlignmentCommand extends Command{
     //called when the command is initialized
     final private DriveSubsystem drive = new DriveSubsystem();
-    final private LimelightSubsystem subsystem = new LimelightSubsystem();
     private double driveDistance;
 
     @Override
     public void initialize(){
-        double distance = subsystem.getDistance()/39.37; //convert to meters
+        double distance = LimelightSubsystem.getDistance()/39.37; //convert to meters
         new DriveCommand(drive, distance, 1, 1, 0);
     }
     //called every time the command is scheduled

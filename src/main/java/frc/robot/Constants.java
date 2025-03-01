@@ -79,7 +79,7 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystemMain = 9;
-    public static final int kElevatorSubsystemFollower = 10; // this will be where the canID for the second motor for the elevator will go. itll just follow the other motor, the canID assigned is just a placeholder
+    public static final int kElevatorSubsystemFollower = 10;
   }
 
   public static final class AlgaeConstants {
