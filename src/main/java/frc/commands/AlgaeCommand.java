@@ -1,10 +1,10 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.AlgaeArmSubsystem;
+import frc.robot.subsystems.AlgaeSubsystem;
 
 public class AlgaeCommand extends Command{
-    private final AlgaeArmSubsystem subsystem = new AlgaeArmSubsystem();
+    private final AlgaeSubsystem subsystem = new AlgaeSubsystem();
 
     //called when the command is initialized
     @Override

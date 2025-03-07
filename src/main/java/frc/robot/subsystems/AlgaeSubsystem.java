@@ -4,12 +4,14 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
-
 import frc.robot.Constants.AlgaeConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
-        //ID for intake part
+    
+    //ID for intake part
+    
     private final SparkMax kAlgaeIntake = new SparkMax(AlgaeConstants.kAlgaeIntake, MotorType.kBrushless);
 
     //Algae intake motor speeds
