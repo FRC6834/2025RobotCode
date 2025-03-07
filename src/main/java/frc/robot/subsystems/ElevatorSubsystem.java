@@ -13,18 +13,18 @@ import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.lang.Math;
 
-public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: ~90 inches tall, two motors (one for each side)
-
+public class ElevatorSubsystem extends SubsystemBase {
+  
+  // initializions
   private final SparkMax kElevatorSubsystemMain = new SparkMax(ElevatorConstants.kElevatorSubsystemMain, MotorType.kBrushless);
-    private final SparkMax kElevatorSubsystemFollower = new SparkMax(ElevatorConstants.kElevatorSubsystemFollower, MotorType.kBrushless);
-    public double targetHeight;
-    public boolean isGoingUp;
-    public double elevatorSprocketCircumference = 2* Math. PI * 1.5; // 2/15/2025 this is in inches. also the 1.5 is just a placeholder number for the radius of the sprocket, this will need to be remeasured
+  private final SparkMax kElevatorSubsystemFollower = new SparkMax(ElevatorConstants.kElevatorSubsystemFollower, MotorType.kBrushless);
+  public double elevatorSprocketCircumference = 2* Math. PI * 1.5; // 2/15/2025 this is in inches. also the 1.5 is just a placeholder number for the radius of the sprocket, this will need to be remeasured
 
-    // 2/1/2025 intitializing the pid controller (constants are TBD) and the encoder that links to motors
-    PIDController elevatorPID = new PIDController(0.0000001, 0.0, 0.0); // 2/1/2025 need 2 be determined with testing
-    private RelativeEncoder elevatorEncoder = kElevatorSubsystemMain.getEncoder();
+  //PID controller
+  PIDController elevatorPID = new PIDController(0.1, 0.0, 0.0); // 2/1/2025 need 2 be determined with testing
+  private RelativeEncoder elevatorEncoder = kElevatorSubsystemMain.getEncoder();
 
+  // moving elevator to setpoint
   public void moveToSetpoint(double reefLevel){
     double setpoint = reefLevel/(2 * Math.PI * elevatorSprocketCircumference); // 2/22/2025 dividing the height of the reefLevel we want to go to by the circumfrence of the elevator sprocket to figure out what the target number of rotations is, which is the setPoint
     double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), setpoint); 
@@ -43,10 +43,5 @@ public class ElevatorSubsystem extends SubsystemBase { // elevator build notes: 
      public void stopElevator(){
       kElevatorSubsystemMain.set(0);
     }
-  
- 
-    public void setConstants(double level, boolean isUp){
-      targetHeight = level;
-      isGoingUp = isUp;
-    }
+
 }
