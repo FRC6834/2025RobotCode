@@ -64,7 +64,6 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int kIntakeSystem = 12;
-    
   }
 
   public static final class ArmConstants {

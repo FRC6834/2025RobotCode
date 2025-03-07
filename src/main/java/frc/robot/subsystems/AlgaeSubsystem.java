@@ -8,7 +8,23 @@ import com.revrobotics.spark.SparkMax;
 
 import frc.robot.Constants.AlgaeConstants;
 
-public class AlgaeArmSubsystem {
+public class AlgaeSubsystem extends SubsystemBase {
+        //ID for intake part
+    private final SparkMax kAlgaeIntake = new SparkMax(AlgaeConstants.kAlgaeIntake, MotorType.kBrushless);
+
+    //Algae intake motor speeds
+    public void startAlgaeIntake(){
+        kAlgaeIntake.set(.75);
+    }
+    
+    public void stopAlgaeIntake(){
+        kAlgaeIntake.set(0);
+    }
+    
+    public void shootAlgaeIntake(){
+        kAlgaeIntake.set(-.75);
+    }
+
     private final SparkMax kAlgaeArmSparkMax = new SparkMax(AlgaeConstants.kAlgaePivot, MotorType.kBrushless);
     private SparkClosedLoopController algaeController = kAlgaeArmSparkMax.getClosedLoopController();
     private RelativeEncoder algaeEncoder = kAlgaeArmSparkMax.getEncoder();
