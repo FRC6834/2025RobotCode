@@ -144,16 +144,16 @@ public class RobotContainer {
         bumperClicks++;
         switch (bumperClicks) {
           case 1:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level1);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1);
           break;
           case 2:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level2);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2);
           break;
           case 3:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level3);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3);
           break;
           case 4:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level4);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4);
           break;    
         }
       }
@@ -168,16 +168,16 @@ public class RobotContainer {
         bumperClicks--;
         switch (bumperClicks) {
           case 1:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level1);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1);
           break;
           case 2: 
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level2); 
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2); 
           break;
           case 3:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level3);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3);
           break;
           case 4:
-          m_ElevatorSubsystem.moveToSetpoint(Constants.ReefLevels.level4);
+          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4);
           break;       
         }
       }

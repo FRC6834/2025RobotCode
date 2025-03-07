@@ -80,6 +80,7 @@ public final class Constants {
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystemMain = 9;
     public static final int kElevatorSubsystemFollower = 10;
+    public static double targetHeight;
   }
 
   public static final class AlgaeConstants {

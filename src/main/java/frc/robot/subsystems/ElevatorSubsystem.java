@@ -5,13 +5,14 @@
 package frc.robot.subsystems;
 
 
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.lang.Math;
+import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
   
@@ -25,13 +26,18 @@ public class ElevatorSubsystem extends SubsystemBase {
   private RelativeEncoder elevatorEncoder = kElevatorSubsystemMain.getEncoder();
 
   // moving elevator to setpoint
-  public void moveToSetpoint(double reefLevel){
-    double setpoint = reefLevel/(2 * Math.PI * elevatorSprocketCircumference); // 2/22/2025 dividing the height of the reefLevel we want to go to by the circumfrence of the elevator sprocket to figure out what the target number of rotations is, which is the setPoint
+  public void moveToSetpoint(double targetHeight){
+    double setpoint = targetHeight/(2 * Math.PI * elevatorSprocketCircumference); // 2/22/2025 dividing the height of the reefLevel we want to go to by the circumfrence of the elevator sprocket to figure out what the target number of rotations is, which is the setPoint
     double pidDifference = elevatorPID.calculate(elevatorEncoder.getPosition(), setpoint); 
     kElevatorSubsystemMain.set(pidDifference); 
     kElevatorSubsystemFollower.set(pidDifference); 
   }
   
+ public void setConstants(double reefLevel){
+     Constants.ElevatorConstants.targetHeight = reefLevel;
+    }
+
+
      public void elevatorUp(){
       kElevatorSubsystemMain.set(-.75);
      }
