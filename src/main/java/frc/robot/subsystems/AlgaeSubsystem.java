@@ -10,43 +10,56 @@ import frc.robot.Constants.AlgaeConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
     
-    //ID for intake part
-    
-    private final SparkMax kAlgaeIntake = new SparkMax(AlgaeConstants.kAlgaeIntake, MotorType.kBrushless);
+    private static final SparkMax kAlgaeIntake = new SparkMax(AlgaeConstants.kAlgaeIntake, MotorType.kBrushless);
 
-    //Algae intake motor speeds
-    public void startAlgaeIntake(){
-        kAlgaeIntake.set(.75);
-    }
-    
-    public void stopAlgaeIntake(){
-        kAlgaeIntake.set(0);
-    }
-    
-    public void shootAlgaeIntake(){
-        kAlgaeIntake.set(-.75);
-    }
-
-    private final SparkMax kAlgaeArmSparkMax = new SparkMax(AlgaeConstants.kAlgaePivot, MotorType.kBrushless);
-    private SparkClosedLoopController algaeController = kAlgaeArmSparkMax.getClosedLoopController();
-    private RelativeEncoder algaeEncoder = kAlgaeArmSparkMax.getEncoder();
+    private static final SparkMax kAlgaeArmSparkMax = new SparkMax(AlgaeConstants.kAlgaeArm, MotorType.kBrushless);
+    private static SparkClosedLoopController algaeController = kAlgaeArmSparkMax.getClosedLoopController();
+    private static RelativeEncoder algaeEncoder = kAlgaeArmSparkMax.getEncoder();
 
     public double algaeTargetAngle = 0.0;
 
-    public void algaeArmMove(){
+    // taking in algae and dropping algaeArm down
+    public static void algaeIntakeSwallow(double position){
+        kAlgaeIntake.set(.75);
+        double algaeMovementError = position - algaeEncoder.getPosition();
+        algaeController.setReference(algaeMovementError, ControlType.kMAXMotionPositionControl);
+    }
+    
+    // holding algae in place
+    public static void algaeIntakeStatic(double position){
+        kAlgaeIntake.set(-0.1);
+        double algaeMovementError = position - algaeEncoder.getPosition();
+        algaeController.setReference(algaeMovementError, ControlType.kMAXMotionPositionControl);
+    }
+    
+    // shooting out algae and dropping algaeArm down
+    public static void algaeIntakeSpit(double position){
+        kAlgaeIntake.set(-.75);
+        double algaeMovementError = position - algaeEncoder.getPosition();
+        algaeController.setReference(algaeMovementError, ControlType.kMAXMotionPositionControl);
+    }
+
+    // fully stopping algae intake
+    public static void stopAlgaeIntake(){
+        kAlgaeIntake.set(0);
+    }
+
+    // for AlgaeCommand initialization and moving the arm to it's home position
+    public static void moveToPosition(double position){ 
+        double algaeMovementError = position - algaeEncoder.getPosition();
+        algaeController.setReference(algaeMovementError, ControlType.kMAXMotionPositionControl);
+    }
+
+  /*public static void algaeArmMove(){
         kAlgaeArmSparkMax.set(.3);
     }
       
-    public void algaeArmStop(){
+    public static void algaeArmStop(){
         kAlgaeArmSparkMax.set(0);
     }
       
     public void algaeArmHouse(){
         kAlgaeArmSparkMax.set(-.3);
     }
-
-    public void moveToPosition(double position){ // Do you need position?
-        double algaeMovementError = algaeTargetAngle - algaeEncoder.getPosition();
-        algaeController.setReference(algaeMovementError, ControlType.kMAXMotionPositionControl);
-    }
+    */
 }
