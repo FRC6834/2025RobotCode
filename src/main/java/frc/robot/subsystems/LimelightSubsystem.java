@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.commands.DriveCommand;
 import frc.robot.AprilTagHeightDB;
@@ -17,12 +18,12 @@ public class LimelightSubsystem extends SubsystemBase{
         final double distance = getDistance();
                 System.out.println("TAG DETECTED WITH ID "+table.getEntry("tid"));
                 System.out.println("DISTANCE TO APRILTAG IN INCHES: "+distance);
-                //SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
+                SmartDashboard.putNumber("Distance to nearest AprilTag (INCHES)", distance); //untested
                 //final double distanceMeters = distance/39.37;
                 final double angle = getHorizontalAngleRadians();
               new DriveCommand(drive, distance, 1,1,angle);
             }
-                                
+
             public static double getHorizontalAngleRadians(){
                 final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
                 final double angle = table.getEntry("tx").getDouble(0);

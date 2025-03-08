@@ -127,7 +127,7 @@ public class RobotContainer {
     //For example, left (L1), down (L2), right (L3), up (L4)
     
     //resets wheels
-    new JoystickButton(XboxController1, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
+    //new JoystickButton(XboxController1, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
     // as the left bumper is clicked, the elevator increments upwards to reef levels. the coralArm also adjusts 
     // accordingly to the angle it should be (an angle for scoring in the reef or an angle for picking up from the feeder)
@@ -229,14 +229,14 @@ public class RobotContainer {
     .whileTrue(new RunCommand(() -> Apriltagdriver.LedLightup())); 
     
     // when the x button is clicked the algae intakes in
-    new JoystickButton(XboxController1, Button.kY.value)
+    new JoystickButton(XboxController1, Button.kX.value)
     .whileTrue(new RunCommand(() -> AlgaeSubsystem.algaeIntakeSwallow(AlgaeConstants.AlgaeArmSetpoints.kMove), m_AlgaeSubsystem))
-    .whileFalse(new RunCommand(() -> AlgaeSubsystem.stopAlgaeIntake(), m_AlgaeSubsystem));
+    .whileFalse(new RunCommand(() -> AlgaeSubsystem.algaeIntakeStatic(AlgaeConstants.AlgaeArmSetpoints.kHome), m_AlgaeSubsystem));
     
     // when the y button is clicked the algae intakes out
     new JoystickButton(XboxController1, Button.kY.value)
     .whileTrue(new RunCommand(() -> AlgaeSubsystem.algaeIntakeSpit(AlgaeConstants.AlgaeArmSetpoints.kMove), m_AlgaeSubsystem))
-    .whileFalse(new RunCommand(() -> AlgaeSubsystem.stopAlgaeIntake(), m_AlgaeSubsystem));
+    .whileFalse(new RunCommand(() -> AlgaeSubsystem.algaeIntakeStatic(AlgaeConstants.AlgaeArmSetpoints.kHome), m_AlgaeSubsystem));
 
     // when the a button is clicked the coral intakes in
     new JoystickButton(XboxController1, Button.kA.value)

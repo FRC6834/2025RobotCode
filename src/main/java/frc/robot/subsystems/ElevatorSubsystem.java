@@ -38,17 +38,19 @@ public class ElevatorSubsystem extends SubsystemBase {
      targetHeight = reefLevel;
     }
 
-
      public static void elevatorUp(){
-      kElevatorSubsystemMain.set(-.75);
+      kElevatorSubsystemMain.set(.75);
+      kElevatorSubsystemFollower.set(-.75);
      }
   
      public static void elevatorDown() {
-      kElevatorSubsystemMain.set(.75);
+      kElevatorSubsystemMain.set(-.75);
+      kElevatorSubsystemFollower.set(.75);
      }
 
      public static void stopElevator(){
       kElevatorSubsystemMain.set(0);
+      kElevatorSubsystemFollower.set(0);
     }
 
 }

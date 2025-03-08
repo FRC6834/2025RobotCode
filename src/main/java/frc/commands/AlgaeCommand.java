@@ -9,7 +9,7 @@ public class AlgaeCommand extends Command{
     //called when the command is initialized
     @Override
     public void initialize() {
-        AlgaeSubsystem.moveToPosition(AlgaeConstants.AlgaeArmSetpoints.kHome);
+        AlgaeSubsystem.settingUpArm();
     }
 
     //called every time the command is scheduled

@@ -71,9 +71,7 @@ public final class Constants {
       public static final double kScore_L1_to_L4 = 1 + 1/6;
       public static final double kFeederStation = 19 + 1/2;
     }
-
   }
-
 
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystemMain = 9;
