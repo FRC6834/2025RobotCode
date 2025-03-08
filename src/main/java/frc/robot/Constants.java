@@ -62,34 +62,39 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
   }
 
-  public static final class IntakeConstants {
-    public static final int kIntakeSystem = 12;
-  }
+  public static final class CoralConstants {
+    public static final int kCoralIntake = 12;
+    public static final int kCoralArm = 11;
 
-  public static final class ArmConstants {
-    public static final int kArmSystem = 11;
-
-    public static final class ArmSetpoints {
+    public static final class CoralArmSetpoints {
       public static final double kHome = 0.0;
       public static final double kScore_L1_to_L4 = 1 + 1/6;
       public static final double kFeederStation = 19 + 1/2;
     }
+
   }
+
 
   public static final class ElevatorConstants {
     public static final int kElevatorSubsystemMain = 9;
     public static final int kElevatorSubsystemFollower = 10;
-    public static double targetHeight;
+
+    public static class Levels {
+      public static final double home = 0;
+      public static final double level1 = 18;
+      public static final double level2 = 31.875;
+      public static final double level3 = 47.0625;
+      public static final double level4 = 72;
+    }
   }
 
   public static final class AlgaeConstants {
     public static final int kAlgaeIntake = 14;
-    public static final int kAlgaePivot = 13;
+    public static final int kAlgaeArm = 13;
 
     public static final class AlgaeArmSetpoints {
       public static final double kHome = 0;
-      public static final double kGoDown = 11.3310; // rotations of the motor for larger gear to go 90 degrees
-      public static final double kGoUp = 11.3310; // roations to house ask
+      public static final double kMove = 11.3310; // rotations of the motor for larger gear to go 90 degrees/house ask
     }
   }
 
@@ -140,12 +145,7 @@ public final class Constants {
   }
 
   // 2/1/2025 height in inches for each of the reef levels
-  public static class ReefLevels {
-    public static final double level1 = 18;
-    public static final double level2 = 31.875;
-    public static final double level3 = 47.0625;
-    public static final double level4 = 72;
-  }
+
 }
 
 

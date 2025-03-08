@@ -6,8 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -16,14 +16,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.commands.CoralIntakeCommand;
-import frc.commands.AlgaeCommand;
-import frc.commands.IntakeShootCommand;
+import frc.robot.Constants.AlgaeConstants;
+//import frc.commands.IntakeShootCommand;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.CoralArmSubsystem;
-import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.Apriltagdriver;
+import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -39,8 +37,7 @@ public class RobotContainer {
     public static boolean dUp;
     // The robot's subsystems
     private final AlgaeSubsystem m_AlgaeSubsystem = new AlgaeSubsystem();
-    private final CoralIntakeSubsystem m_CoralIntakeSubsystem = new CoralIntakeSubsystem();
-    private final CoralArmSubsystem m_CoralArmSubsystem = new CoralArmSubsystem();
+    private final CoralSubsystem m_CoralSubsystem = new CoralSubsystem();
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
@@ -68,8 +65,8 @@ public class RobotContainer {
       SmartDashboard.putData("Auto Chooser", autoChooser);
   
       //named and registered commands for path planner
-      NamedCommands.registerCommand("intakein", new CoralIntakeCommand());
-      NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
+      //NamedCommands.registerCommand("intakein", new CoralCommand());
+      //NamedCommands.registerCommand("intakeshoot", new IntakeShootCommand());
 
       // Configure the button bindings
       configureButtonBindings();
@@ -129,127 +126,145 @@ public class RobotContainer {
      * Start Button - Button.KStart.value
      */
 
-
     //We should consider using the D-pad for different scoring heights - it's not ideal, but it will allow us to get all of the subsystems working on one controller
     //For example, left (L1), down (L2), right (L3), up (L4)
     
     //resets wheels
     new JoystickButton(XboxController1, Button.kX.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(),m_robotDrive));
 
-    // 2/22/2025 setting the left bumper so each time it's clicked the target reef level for the elevator increments UP
+    // as the left bumper is clicked, the elevator increments upwards to reef levels. the coralArm also adjusts 
+    // accordingly to the angle it should be (an angle for scoring in the reef or an angle for picking up from the feeder)
     new JoystickButton(XboxController1, Button.kLeftBumper.value) 
     .whileTrue(new RunCommand(() ->
     { 
-      if (0<bumperClicks && bumperClicks<4) {     
+      if (bumperClicks>=0 && bumperClicks<4) {     
         bumperClicks++;
         switch (bumperClicks) {
+         case 0: 
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.home);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kFeederStation, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
+          break;
           case 1:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1);
-          break;
-          case 2:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2);
-          break;
-          case 3:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3);
-          break;
-          case 4:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4);
-          break;    
-        }
-      }
-    }, m_ElevatorSubsystem))
-    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-
-    // 2/22/2025 setting the right bumper so each time it's clicked the target reef level for the elevator increments DOWN
-    new JoystickButton(XboxController1, Button.kRightBumper.value) 
-    .whileTrue(new RunCommand(() -> 
-    { 
-      if (1<bumperClicks && bumperClicks<5) {     
-        bumperClicks--;
-        switch (bumperClicks) {
-          case 1:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level1);
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level1);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
           case 2: 
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level2); 
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level2);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true); 
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
           case 3:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level3);
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level3);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
           case 4:
-          m_ElevatorSubsystem.setConstants(Constants.ReefLevels.level4);
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level4);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;       
         }
       }
     }, m_ElevatorSubsystem))
-    .whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+    .whileFalse(new RunCommand(() -> ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
 
-
-   
-    // 2/22/2025 setting the triggers to make the elevator go up/down/stop MANUALLY 
-     CommandXboxController1.leftTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
-     CommandXboxController1.leftTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-     CommandXboxController1.rightTrigger().whileTrue(new RunCommand(() -> m_ElevatorSubsystem.elevatorDown(), m_ElevatorSubsystem));
-     CommandXboxController1.rightTrigger().whileFalse(new RunCommand(() -> m_ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
-
-    new JoystickButton(XboxController1, Button.kY.value).whileTrue(new RunCommand(() -> {
-      switch (buttonYClicks) {
-        case 1: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kScore_L1_to_L4, true);
+    // as the right bumper is clicked, the elevator increments downwards to reef levels/the feeder station. the coralArm also adjusts 
+    // accordingly to the angle it should be (an angle for scoring in the reef or an angle for picking up from the feeder)
+    new JoystickButton(XboxController1, Button.kRightBumper.value) 
+    .whileTrue(new RunCommand(() -> 
+    { 
+      if (bumperClicks<0 && bumperClicks>=4) {     
+        bumperClicks--;
+        switch (bumperClicks) {
+          case 0:
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.home);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kFeederStation, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
-        case 2: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kFeederStation, true);
+          case 1:
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level1);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
-        case 0: m_CoralArmSubsystem.setConstants(Constants.ArmConstants.ArmSetpoints.kHome, true);
+          case 2: 
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level2);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true); 
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
           break;
+          case 3:
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level3);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
+          break;
+          case 4:
+          ElevatorSubsystem.setConstants(Constants.ElevatorConstants.Levels.level4);
+          CoralSubsystem.setConstants(Constants.CoralConstants.CoralArmSetpoints.kScore_L1_to_L4, true);
+          CoralSubsystem.moveToPosition(CoralSubsystem.targetAngle);
+          ElevatorSubsystem.moveToSetpoint(ElevatorSubsystem.targetHeight);
+          break;       
+        }
       }
-
-      // Resets the case value if case = 1
-      if (buttonYClicks < 2) {
-        buttonYClicks++;
-      } else {
-        buttonYClicks = 0;
-      }
-    }, m_CoralArmSubsystem)).whileFalse(new RunCommand(() -> m_CoralArmSubsystem.armStop(), m_CoralArmSubsystem));
-
-    // Algae arm controller
-    new JoystickButton(XboxController1, Button.kY.value).whileTrue(new RunCommand(() -> {
-      switch (buttonYClicks) {
-        case 0: m_CoralArmSubsystem.setConstants(Constants.AlgaeConstants.AlgaeArmSetpoints.kGoDown, true);
-          break;
-        case 1: m_CoralArmSubsystem.setConstants(Constants.AlgaeConstants.AlgaeArmSetpoints.kGoUp, true);
-          break;
-      }
-
-      // Resets the case value if case = 1
-      if (buttonYClicks < 1) {
-        buttonYClicks++;
-      } else {
-        buttonYClicks = 0;
-      }
-    }, m_CoralArmSubsystem)).whileFalse(new RunCommand(() -> m_CoralArmSubsystem.armStop(), m_CoralArmSubsystem));
-  
-    //B Button: Intake
-    new JoystickButton(XboxController1, Button.kB.value)
-      .whileTrue(new RunCommand(() -> m_CoralIntakeSubsystem.startIntake(), m_CoralIntakeSubsystem))
-      .whileFalse(new RunCommand(() -> m_CoralIntakeSubsystem.stopIntake(), m_CoralIntakeSubsystem));
+    }, m_ElevatorSubsystem))
+    .whileFalse(new RunCommand(() -> ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
     
-    new JoystickButton(XboxController1, Button.kA.value)
-      .whileTrue(new RunCommand(() -> m_AlgaeSubsystem.startAlgaeIntake(), m_AlgaeSubsystem))
-      .whileFalse(new RunCommand(() -> m_AlgaeSubsystem.stopAlgaeIntake(), m_AlgaeSubsystem));
-    //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
+    // when the left/right triggers are clicked the elevator goes up/down manually
+    CommandXboxController1.leftTrigger().whileTrue(new RunCommand(() -> ElevatorSubsystem.elevatorUp(), m_ElevatorSubsystem));
+    CommandXboxController1.leftTrigger().whileFalse(new RunCommand(() -> ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
+    CommandXboxController1.rightTrigger().whileTrue(new RunCommand(() -> ElevatorSubsystem.elevatorDown(), m_ElevatorSubsystem));
+    CommandXboxController1.rightTrigger().whileFalse(new RunCommand(() -> ElevatorSubsystem.stopElevator(), m_ElevatorSubsystem));
 
-    //X Button: Test Limelight Distance estimation
-    new JoystickButton(XboxController1, Button.kX.value)
-      .whileTrue(new RunCommand(() -> LimelightSubsystem.align(m_robotDrive), m_limelight));
-    new JoystickButton(XboxController1, Button.kX.value)
-      .whileTrue(new RunCommand(() -> Apriltagdriver.LedLightup())); // Nice to have as a visual indicator for distance tracking, also lights up the apriltag for better estimation.
-}
+    // when the back button is clicked the limelight is activated as a visual indicator for distance tracking and the april tag is set up
+    // for better estimation
+    new JoystickButton(XboxController1, Button.kBack.value)
+    .whileTrue(new RunCommand(() -> LimelightSubsystem.align(m_robotDrive), m_limelight));
+    new JoystickButton(XboxController1, Button.kBack.value)
+    .whileTrue(new RunCommand(() -> Apriltagdriver.LedLightup())); 
+    
+    // when the x button is clicked the algae intakes in
+    new JoystickButton(XboxController1, Button.kY.value)
+    .whileTrue(new RunCommand(() -> AlgaeSubsystem.algaeIntakeSwallow(AlgaeConstants.AlgaeArmSetpoints.kMove), m_AlgaeSubsystem))
+    .whileFalse(new RunCommand(() -> AlgaeSubsystem.stopAlgaeIntake(), m_AlgaeSubsystem));
+    
+    // when the y button is clicked the algae intakes out
+    new JoystickButton(XboxController1, Button.kY.value)
+    .whileTrue(new RunCommand(() -> AlgaeSubsystem.algaeIntakeSpit(AlgaeConstants.AlgaeArmSetpoints.kMove), m_AlgaeSubsystem))
+    .whileFalse(new RunCommand(() -> AlgaeSubsystem.stopAlgaeIntake(), m_AlgaeSubsystem));
+
+    // when the a button is clicked the coral intakes in
+    new JoystickButton(XboxController1, Button.kA.value)
+    .whileTrue(new RunCommand(() -> CoralSubsystem.startCoralIntake(), m_CoralSubsystem))
+    .whileFalse(new RunCommand(() -> CoralSubsystem.stopCoralIntake(), m_CoralSubsystem));
+
+    // when the b button is clicked the coral intakes out
+    new JoystickButton(XboxController1, Button.kB.value)
+    .whileTrue(new RunCommand(() -> CoralSubsystem.shootCoralIntake(), m_CoralSubsystem))
+    .whileFalse(new RunCommand(() -> CoralSubsystem.stopCoralIntake(), m_CoralSubsystem));
+
+    //How are we making the intake go the opposite directions? We need to be able to intake it and spit it out. - George
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+
+   /* commented out bcs it doesn't work - n2s to fix later
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
+  */
+  
+  }
 }
+
