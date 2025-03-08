@@ -1,4 +1,4 @@
-package frc.commands;
+/* package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralIntakeSubsystem;
@@ -21,3 +21,4 @@ public class IntakeShootCommand extends Command{
     public boolean isFinished(){return false;}
  }
  
+*/

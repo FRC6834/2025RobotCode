@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -41,7 +38,7 @@ public class RobotContainer {
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
-    private final SendableChooser<Command> autoChooser;
+    //private final SendableChooser<Command> autoChooser;
     int buttonYClicks = 0;
     int bumperClicks = 0;
       
@@ -56,13 +53,13 @@ public class RobotContainer {
     public RobotContainer() {
             // ...
     
-      // Build an auto chooser. This will use Commands.none() as the default option.
-      autoChooser = AutoBuilder.buildAutoChooser();
+    /*  // Build an auto chooser. This will use Commands.none() as the default option.
+      autoChooser = AutoBuilder.buildAutoChooser(); */
   
       // Another option that allows you to specify the default auto by its name
       // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
   
-      SmartDashboard.putData("Auto Chooser", autoChooser);
+      //SmartDashboard.putData("Auto Chooser", autoChooser);
   
       //named and registered commands for path planner
       //NamedCommands.registerCommand("intakein", new CoralCommand());

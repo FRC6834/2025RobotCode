@@ -17,10 +17,10 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.pathplanner.lib.auto.AutoBuilder;
+/*import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController; */
 //imports for navX
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
@@ -70,7 +70,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
-    RobotConfig config;
+   /* RobotConfig config;
     try{
       config = RobotConfig.fromGUISettings();
     // Configure AutoBuilder last
@@ -101,6 +101,7 @@ public class DriveSubsystem extends SubsystemBase {
    } catch (Exception e) {
    DriverStation.reportError("autobuilderfailed",e.getStackTrace());
   }
+   */
 }
 
   
